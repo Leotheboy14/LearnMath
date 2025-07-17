@@ -564,9 +564,9 @@
             <div class="audio-section">
                 <h3>Âm thanh giảng bài</h3>
                 <div>
-                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1f1qpkHpdqcl?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                    <div><iframe width="300" height="60" src="https://vocaroo.com/embed/19jNCRarNLxn?autoplay=0" frameborder="0" allow="autoplay"></iframe>
                     <br>
-                    <a href="https://voca.ro/EXAMPLE_AUDIO" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
+                    <a href="https://voca.ro/19jNCRarNLxn" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
                 </div>
             </div>
 			<div class="quiz-wrapper">
@@ -601,75 +601,75 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slideData = [
-                {
-                    title: 'Đạo hàm tích phân có cận tham số',
-                    content: `<div class="info-block">
-                                <p><strong>Quy tắc đạo hàm dưới dấu tích phân</strong></p>
-                                <p>(Leibniz rule cho cận cố định, cận biến thiên, kết hợp)</p>
-                              </div>`
-                },
-                {
-                    title: 'Ký hiệu chung',
-                    content: `<div class="info-block">
-                                <p><strong>Tích phân có tham số:</strong></p>
-                                <p>\\[ I(x) = \\int_{a(x)}^{b(x)} f(t, x) \\, dt \\]</p>
-                                <p>Đạo hàm \( I'(x) \) sử dụng quy tắc Leibniz.</p>
-                              </div>`
-                },
-                {
-                    title: '1. Cận cố định',
-                    content: `<div class="info-block">
-                                <p><strong>Công thức:</strong></p>
-                                <p>\\[ \\frac{d}{dx} \\int_{a}^{b} f(t, x) \\, dt = \\int_{a}^{b} \\frac{\\partial f}{\\partial x}(t, x) \\, dt \\]</p>
-                                <p><strong>Cách áp dụng:</strong></p>
-                                <ul>
-                                    <li>Đổi thứ tự đạo hàm và tích phân.</li>
-                                </ul>
-                              </div>`
-                },
-                {
-                    title: 'Bài toán cận cố định',
-                    content: `<div class="info-block">
-                                <p><strong>Bài toán:</strong> Tìm \( I'(x) \) với \( I(x) = \\int_{0}^{1} \\sin(xt) \\, dt \).</p>
-                                <p><strong>Lời giải:</strong></p>
-                                <p>\\[ I'(x) = \\int_{0}^{1} t \\cos(xt) \\, dt = \\frac{\\sin x}{x} - \\frac{1 - \\cos x}{x^2} \\]</p>
-                              </div>`
-                },
-                {
-                    title: '2. Cận phụ thuộc tham số',
-                    content: `<div class="info-block">
-                                <p><strong>Công thức:</strong></p>
-                                <p>\\[ \\frac{d}{dx} \\int_{a(x)}^{b(x)} f(t) \\, dt = f(b(x)) b'(x) - f(a(x)) a'(x) \\]</p>
-                                <p><strong>Cách áp dụng:</strong></p>
-                                <ul>
-                                    <li>Sử dụng định lý cơ bản.</li>
-                                </ul>
-                              </div>`
-                },
-                {
-                    title: 'Bài toán cận phụ thuộc',
-                    content: `<div class="info-block">
-                                <p><strong>Bài toán:</strong> Tìm \( I'(x) \) với \( I(x) = \\int_{x}^{x^2} t^2 \\, dt \).</p>
-                                <p><strong>Lời giải:</strong></p>
-                                <p>\\[ I'(x) = (x^2)^2 \\cdot 2x - x^2 \\cdot 1 = 2x^5 - x^2 \\]</p>
-                              </div>`
-                },
-                {
-                    title: '3. Cả hai trường hợp',
-                    content: `<div class="info-block">
-                                <p><strong>Công thức tổng quát:</strong></p>
-                                <p>\\[ I'(x) = f(b(x), x) b'(x) - f(a(x), x) a'(x) + \\int_{a(x)}^{b(x)} \\frac{\\partial f}{\\partial x}(t, x) \\, dt \\]</p>
-                              </div>`
-                },
-                {
-                    title: 'Bài toán kết hợp',
-                    content: `<div class="info-block">
-                                <p><strong>Bài toán:</strong> Tìm \( I'(x) \) với \( I(x) = \\int_{0}^{x} e^{xt} \\, dt \).</p>
-                                <p><strong>Lời giải:</strong></p>
-                                <p>\\[ I'(x) = e^{x^2} + \\int_{0}^{x} t e^{xt} \\, dt \\]</p>
-                              </div>`
-                }
-            ];
+    {
+        title: 'Đạo hàm tích phân có cận tham số',
+        content: `<div class="info-block">
+                    <p><strong>Quy tắc đạo hàm dưới dấu tích phân</strong></p>
+                    <p>(Leibniz rule cho cận cố định, cận biến thiên, kết hợp)</p>
+                  </div>`
+    },
+    {
+        title: 'Ký hiệu chung',
+        content: `<div class="info-block">
+                    <p><strong>Tích phân có tham số:</strong></p>
+                    <p>\\[ I(x) = \\int_{a(x)}^{b(x)} f(t, x) \\, dt \\]</p>
+                    <p>Đạo hàm \\( I'(x) \\) sử dụng quy tắc Leibniz.</p>
+                  </div>`
+    },
+    {
+        title: '1. Cận cố định',
+        content: `<div class="info-block">
+                    <p><strong>Công thức:</strong></p>
+                    <p>\\[ \\frac{d}{dx} \\int_{a}^{b} f(t, x) \\, dt = \\int_{a}^{b} \\frac{\\partial f}{\\partial x}(t, x) \\, dt \\]</p>
+                    <p><strong>Cách áp dụng:</strong></p>
+                    <ul>
+                        <li>Đổi thứ tự đạo hàm và tích phân.</li>
+                    </ul>
+                  </div>`
+    },
+    {
+        title: 'Bài toán cận cố định',
+        content: `<div class="info-block">
+                    <p><strong>Bài toán:</strong> Tìm \\( I'(x) \\) với \\( I(x) = \\int_{0}^{1} \\sin(xt) \\, dt \\).</p>
+                    <p><strong>Lời giải:</strong></p>
+                    <p>\\[ I'(x) = \\int_{0}^{1} t \\cos(xt) \\, dt = \\frac{\\sin x}{x} - \\frac{1 - \\cos x}{x^2} \\]</p>
+                  </div>`
+    },
+    {
+        title: '2. Cận phụ thuộc tham số',
+        content: `<div class="info-block">
+                    <p><strong>Công thức:</strong></p>
+                    <p>\\[ \\frac{d}{dx} \\int_{a(x)}^{b(x)} f(t) \\, dt = f(b(x)) b'(x) - f(a(x)) a'(x) \\]</p>
+                    <p><strong>Cách áp dụng:</strong></p>
+                    <ul>
+                        <li>Sử dụng định lý cơ bản.</li>
+                    </ul>
+                  </div>`
+    },
+    {
+        title: 'Bài toán cận phụ thuộc',
+        content: `<div class="info-block">
+                    <p><strong>Bài toán:</strong> Tìm \\( I'(x) \\) với \\( I(x) = \\int_{x}^{x^2} t^2 \\, dt \\).</p>
+                    <p><strong>Lời giải:</strong></p>
+                    <p>\\[ I'(x) = (x^2)^2 \\cdot 2x - x^2 \\cdot 1 = 2x^5 - x^2 \\]</p>
+                  </div>`
+    },
+    {
+        title: '3. Cả hai trường hợp',
+        content: `<div class="info-block">
+                    <p><strong>Công thức tổng quát:</strong></p>
+                    <p>\\[ I'(x) = f(b(x), x) b'(x) - f(a(x), x) a'(x) + \\int_{a(x)}^{b(x)} \\frac{\\partial f}{\\partial x}(t, x) \\, dt \\]</p>
+                  </div>`
+    },
+    {
+        title: 'Bài toán kết hợp',
+        content: `<div class="info-block">
+                    <p><strong>Bài toán:</strong> Tìm \\( I'(x) \\) với \\( I(x) = \\int_{0}^{x} e^{xt} \\, dt \\).</p>
+                    <p><strong>Lời giải:</strong></p>
+                    <p>\\[ I'(x) = e^{x^2} + \\int_{0}^{x} t e^{xt} \\, dt \\]</p>
+                  </div>`
+    }
+];
             
             const slidesWrapper = document.querySelector('.slides-wrapper');
             slidesWrapper.innerHTML = slideData.map((s, index) => `
