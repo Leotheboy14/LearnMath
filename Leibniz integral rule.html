@@ -258,11 +258,42 @@
         .lecture-content ol { padding-left: 25px; }
 
         .audio-section { margin-bottom: 24px; }
-        .audio-section iframe { border-radius: 12px; box-shadow: 0 2px 10px var(--shadow-color); }
+        .audio-section iframe { 
+            border-radius: 12px; 
+            box-shadow: 0 2px 10px var(--shadow-color); 
+            overflow: hidden; /* Hide scrollbar for Vocaroo iframe */
+        }
+        .audio-section iframe::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for WebKit browsers */
+        }
+        .audio-section iframe {
+            -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none;  /* Hide scrollbar for Firefox */
+        }
         .audio-section a { font-size: 12px; color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
         .audio-section a:hover { color: var(--accent-hover); }
 
-        .quiz-wrapper { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; border-top: 1px solid var(--border-color); margin-top: 24px; padding-top: 24px; }
+        .quiz-wrapper { 
+		flex-grow: 1; 
+		display: flex; 
+		flex-direction: column; 
+		overflow-y: auto; 
+		border-top: 1px solid var(--border-color); 
+		margin-top: 24px; 
+		padding-top: 24px; 
+		max-height: 400px; /* Reduced to ensure scrollbar appears */
+		min-height: 200px; /* Ensures a minimum height for consistency */
+		}
+		.quiz-wrapper::-webkit-scrollbar {
+		width: 8px;
+		}
+		.quiz-wrapper::-webkit-scrollbar-track {
+		background: var(--solution-bg);
+		}
+		.quiz-wrapper::-webkit-scrollbar-thumb {
+			background: var(--accent-color);
+			border-radius: 4px;
+		}
         .quiz-progress { width: 100%; background-color: #e5e7eb; border-radius: 10px; height: 10px; margin-bottom: 10px; overflow: hidden; }
         .progress-bar { width: 0; height: 100%; background-color: var(--accent-color); border-radius: 10px; transition: width 0.5s ease-out; }
         .progress-text { text-align: right; font-size: 0.9em; font-weight: 500; color: var(--text-secondary); margin-bottom: 20px; }
@@ -326,6 +357,14 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px var(--shadow-color);
             width: 100%;
+            overflow: hidden; /* Hide scrollbar for Vocaroo iframe */
+        }
+        .solution-audio iframe::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for WebKit browsers */
+        }
+        .solution-audio iframe {
+            -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none;  /* Hide scrollbar for Firefox */
         }
 
         .solution-audio a {
@@ -569,8 +608,7 @@
                     <a href="https://voca.ro/19jNCRarNLxn" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
                 </div>
             </div>
-			<div class="quiz-wrapper">
-                <div class="quiz-wrapper">
+            <div class="quiz-wrapper">
                 <h3>Bài tập Củng cố</h3>
                 <div class="quiz-progress">
                     <div class="progress-bar" id="progressBar"></div>
@@ -692,8 +730,8 @@
                                 <h5>Lời giải chi tiết</h5>
                                 <div class="solution-audio">
                                     <p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
-                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/EXAMPLE?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-                                    <br><a href="https://voca.ro/EXAMPLE" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
+                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1NYY8wvOkMw8?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                                    <br><a href="https://voca.ro/1NYY8wvOkMw8" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
                                 </div>
                             </div>
                             <p style="font-style: italic;">Sử dụng quy tắc Leibniz cho tích phân với cận phụ thuộc tham số. Vì hàm dưới dấu tích phân không phụ thuộc \\( \\alpha \\), đạo hàm là \\( f(b(\\alpha)) b'(\\alpha) - f(a(\\alpha)) a'(\\alpha) \\), với \\( a(\\alpha) = 0 \\), \\( b(\\alpha) = \\alpha^{2} + 1 \\), \\( f(t) = t \\cos(t) \\).</p>
@@ -708,8 +746,8 @@
                                 <h5>Lời giải chi tiết</h5>
                                 <div class="solution-audio">
                                     <p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
-                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/EXAMPLE?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-                                    <br><a href="https://voca.ro/EXAMPLE" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
+                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                                    <br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
                                 </div>
                             </div>
                             <p style="font-style: italic;">Sử dụng quy tắc Leibniz cho cận phụ thuộc tham số. Hàm \\( f(t) = 1 + t^{3} \\) không phụ thuộc x, cận dưới 0 cố định, cận trên \\( x^{2} \\).</p>
