@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-	<script>
-	window.MathJax = {
-	  tex: {
-		inlineMath: [['\\(', '\\)']],
-		displayMath: [['\\[', '\\]']]
-	  },
-	  svg: {
-		fontCache: 'global'
-	  }
-	};
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <!-- KaTeX auto-render extension for automatic rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Học và Luyện tập: Đạo hàm của hàm ẩn</title>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -558,8 +551,9 @@
                     <h3>Công thức đạo hàm hàm ẩn</h3>
                     <p><strong>Công thức:</strong></p>
                     <p>\[
-                    \frac{dy}{dx} = -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}}, \quad \text{với } \frac{\partial F}{\partial y} \neq 0
+                    \frac{dy}{dx} = -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}}
                     \]</p>
+                    <p>với \( \frac{\partial F}{\partial y} \neq 0 \)</p>
                     <p><strong>Cách áp dụng:</strong></p>
                     <ul>
                         <li>Lấy đạo hàm hai vế của phương trình \( F(x, y) = 0 \) theo \( x \), coi \( y \) là hàm của \( x \).</li>
@@ -627,9 +621,9 @@
             <div class="audio-section">
                 <h3>Âm thanh giảng bài</h3>
                 <div>
-                    <div><iframe width="300" height="60" src="https://vocaroo.com/embed/19jNCRarNLxn?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                    <div><iframe width="300" height="60" src="https://vocaroo.com/embed/1agHNSyk279r?autoplay=0" frameborder="0" allow="autoplay"></iframe>
                     <br>
-                    <a href="https://voca.ro/19jNCRarNLxn" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
+                    <a href="https://voca.ro/1agHNSyk279r" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
                 </div>
             </div>
             <div class="quiz-wrapper">
@@ -644,10 +638,10 @@
                 
                 <div class="quiz-footer">
                     <div id="quizResult"></div>
-                    <button id="submitAnswerBtn" onclick="submitAnswer()" style="display: none;">Nộp Đáp Án</button>
-                    <button id="viewSolutionBtn" onclick="showSolution()" style="display: none;">Xem Lời Giải</button>
-                    <button id="nextQuestionBtn" onclick="nextQuestion()" style="display: none;">Câu tiếp theo</button>
-                    <button id="resetQuizBtn" onclick="resetQuiz()" style="display: none;">Làm lại</button>
+                    <button id="submitAnswerBtn" onclick="submitAnswer()">Nộp Đáp Án</button>
+                    <button id="viewSolutionBtn" onclick="showSolution()">Xem Lời Giải</button>
+                    <button id="nextQuestionBtn" onclick="nextQuestion()">Câu tiếp theo</button>
+                    <button id="resetQuizBtn" onclick="resetQuiz()">Làm lại</button>
                 </div>
             </div>
         </div>
@@ -663,46 +657,47 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slideData = [
-    {
-        title: 'Đạo hàm của hàm ẩn',
-        content: `<div class="info-block">
-                    <p><strong>Khái niệm cơ bản</strong></p>
-                    <p>Hàm ẩn được định nghĩa bởi phương trình \( F(x, y) = 0 \). Đạo hàm \( \frac{dy}{dx} \) được tính bằng quy tắc chuỗi.</p>
-                  </div>`
-    },
-    {
-        title: 'Công thức đạo hàm',
-        content: `<div class="info-block">
-                    <p><strong>Công thức:</strong></p>
-                    <p>\[ \frac{dy}{dx} = -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}}, \quad \text{với} \quad \frac{\partial F}{\partial y} \neq 0 \]</p>
-                    <p>Sử dụng quy tắc chuỗi để lấy đạo hàm hai vế của phương trình.</p>
-                  </div>`
-    },
-    {
-        title: 'Ví dụ 1',
-        content: `<div class="info-block">
-                    <p><strong>Bài toán:</strong> Tìm \( \frac{dy}{dx} \) với \( x^2 + y^2 = 25 \).</p>
-                    <p><strong>Lời giải:</strong></p>
-                    <p>\[ 2x + 2y \frac{dy}{dx} = 0 \implies \frac{dy}{dx} = -\frac{x}{y} \]</p>
-                  </div>`
-    },
-    {
-        title: 'Ví dụ 2',
-        content: `<div class="info-block">
-                    <p><strong>Bài toán:</strong> Tìm \( \frac{dy}{dx} \) với \( xy + \sin(y) = 1 \).</p>
-                    <p><strong>Lời giải:</strong></p>
-                    <p>\[ y + x \frac{dy}{dx} + \cos(y) \frac{dy}{dx} = 0 \implies \frac{dy}{dx} = -\frac{y}{x + \cos(y)} \]</p>
-                  </div>`
-    },
-    {
-        title: 'Đạo hàm bậc cao',
-        content: `<div class="info-block">
-                    <p><strong>Cách tính:</strong></p>
-                    <p>Lấy đạo hàm của \( \frac{dy}{dx} \) theo \( x \), sử dụng quy tắc chuỗi.</p>
-                    <p><strong>Ví dụ:</strong> Với \( x^2 + y^2 = 25 \), ta có \( \frac{d^2y}{dx^2} = -\frac{25}{y^3} \).</p>
-                  </div>`
-    }
-];
+                {
+                    title: 'Đạo hàm của hàm ẩn',
+                    content: `<div class="info-block">
+                                <p><strong>Khái niệm cơ bản</strong></p>
+                                <p>Hàm ẩn được định nghĩa bởi phương trình \\( F(x, y) = 0 \\). Đạo hàm \\( \\frac{dy}{dx} \\) được tính bằng quy tắc chuỗi.</p>
+                              </div>`
+                },
+                {
+                    title: 'Công thức đạo hàm',
+                    content: `<div class="info-block">
+                                <p><strong>Công thức:</strong></p>
+                                <p>\\[ \\frac{dy}{dx} = -\\frac{\\frac{\\partial F}{\\partial x}}{\\frac{\\partial F}{\\partial y}} \\]</p>
+                                <p>với \\( \\frac{\\partial F}{\\partial y} \\neq 0 \\)</p>
+                                <p>Sử dụng quy tắc chuỗi để lấy đạo hàm hai vế của phương trình.</p>
+                              </div>`
+                },
+                {
+                    title: 'Ví dụ 1',
+                    content: `<div class="info-block">
+                                <p><strong>Bài toán:</strong> Tìm \\( \\frac{dy}{dx} \\) với \\( x^2 + y^2 = 25 \\).</p>
+                                <p><strong>Lời giải:</strong></p>
+                                <p>\\[ 2x + 2y \\frac{dy}{dx} = 0 \\implies \\frac{dy}{dx} = -\\frac{x}{y} \\]</p>
+                              </div>`
+                },
+                {
+                    title: 'Ví dụ 2',
+                    content: `<div class="info-block">
+                                <p><strong>Bài toán:</strong> Tìm \\( \\frac{dy}{dx} \\) với \\( xy + \\sin(y) = 1 \\).</p>
+                                <p><strong>Lời giải:</strong></p>
+                                <p>\\[ y + x \\frac{dy}{dx} + \\cos(y) \\frac{dy}{dx} = 0 \\implies \\frac{dy}{dx} = -\\frac{y}{x + \\cos(y)} \\]</p>
+                              </div>`
+                },
+                {
+                    title: 'Đạo hàm bậc cao',
+                    content: `<div class="info-block">
+                                <p><strong>Cách tính:</strong></p>
+                                <p>Lấy đạo hàm của \\( \\frac{dy}{dx} \\) theo \\( x \\), sử dụng quy tắc chuỗi.</p>
+                                <p><strong>Ví dụ:</strong> Với \\( x^2 + y^2 = 25 \\), ta có \\( \\frac{d^2y}{dx^2} = -\\frac{25}{y^3} \\).</p>
+                              </div>`
+                }
+            ];
             
             const slidesWrapper = document.querySelector('.slides-wrapper');
             slidesWrapper.innerHTML = slideData.map((s, index) => `
@@ -717,64 +712,142 @@
             window.currentContent = 'slides';
 
             window.quizData = [
-                {
-                    question: `Tìm \( \frac{dy}{dx} \) với phương trình \( x^3 + y^3 = 8 \).`,
-                    options: ["-\frac{x^2}{y^2}", "-\frac{y^2}{x^2}", "\frac{x^2}{y^2}", "\frac{y^2}{x^2}"],
-                    answer: 0,
-                    solution: `<div class="solution-header">
-                                <h5>Lời giải chi tiết</h5>
-                                <div class="solution-audio">
-                                    <p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
-                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1NYY8wvOkMw8?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-                                    <br><a href="https://voca.ro/1NYY8wvOkMw8" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
-                                </div>
-                            </div>
-                            <p style="font-style: italic;">Lấy đạo hàm hai vế của phương trình \( x^3 + y^3 = 8 \) theo \( x \):</p>
-                            <p style="font-style: italic;">\( 3x^2 + 3y^2 \frac{dy}{dx} = 0 \).</p>
-                            <p style="font-style: italic;">Giải cho \( \frac{dy}{dx} \):</p>
-                            <p style="font-style: italic;">\( \frac{dy}{dx} = -\frac{x^2}{y^2} \).</p>
-                            <p><strong>Đáp án đúng:</strong> A</p>`
-                },
-                {
-                    question: `Tìm \( \frac{dy}{dx} \) tại điểm \( (1, 1) \) với phương trình \( x^2 + xy + y^2 = 3 \).`,
-                    options: ["-1", "1", "0", "-2"],
-                    answer: 0,
-                    solution: `<div class="solution-header">
-                                <h5>Lời giải chi tiết</h5>
-                                <div class="solution-audio">
-                                    <p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
-                                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-                                    <br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
-                                </div>
-                            </div>
-                            <p style="font-style: italic;">Lấy đạo hàm hai vế của \( x^2 + xy + y^2 = 3 \):</p>
-                            <p style="font-style: italic;">\( 2x + (y + x \frac{dy}{dx}) + 2y \frac{dy}{dx} = 0 \).</p>
-                            <p style="font-style: italic;">Rút gọn: \( 2x + y + (x + 2y) \frac{dy}{dx} = 0 \).</p>
-                            <p style="font-style: italic;">Giải: \( \frac{dy}{dx} = -\frac{2x + y}{x + 2y} \).</p>
-                            <p style="font-style: italic;">Tại \( (1, 1) \): \( \frac{dy}{dx} = -\frac{2 \cdot 1 + 1}{1 + 2 \cdot 1} = -\frac{3}{3} = -1 \).</p>
-                            <p><strong>Đáp án đúng:</strong> A</p>`
-                }
-            ];
-            
+			{
+				question: `Tìm $ y'(0) $ nếu $ 2y + x^2 y^5 - 4x = 0 $.`,
+				options: ["A. -2", "B. 2", "C. 0", "D. -1", "E. 1", "F. Không có đáp án nào đúng"],
+				answer: 1,
+				solution: `<div class="solution-header">
+							<h5>Lời giải chi tiết</h5>
+							<div class="solution-audio">
+								<p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
+								<iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+								<br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
+							</div>
+						</div>
+						<p style="font-style: italic;">Phương trình: $ 2y + x^2 y^5 - 4x = 0 $.</p>
+						<p style="font-style: italic;">Lấy đạo hàm hai vế theo $ x $, ta được:</p>
+						<p style="font-style: italic;">\\[ 2 \\frac{dy}{dx} + 2x y^5 + x^2 \\cdot 5y^4 \\frac{dy}{dx} - 4 = 0 \\]</p>
+						<p style="font-style: italic;">Tại $ x = 0 $, thay vào ta có:</p>
+						<p style="font-style: italic;">\\[ 2 \\frac{dy}{dx} + 0 + 0 - 4 = 0 \\]</p>
+						<p style="font-style: italic;">Giải:</p>
+						<p style="font-style: italic;">\\[ 2 \\frac{dy}{dx} = 4 \\]</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = 2 \\]</p>
+						<p><strong>Đáp án đúng: B</strong></p>`
+			},
+			{
+				question: `Lấy đạo hàm ẩn để tìm hệ số góc tiếp tuyến tại điểm $ (2, 1) $ của đường cong $ x^4 y^3 = 16 $.`,
+				options: [
+					"A. Không có đáp án nào đúng",
+					"B. $ 2 $",
+					"C. $ \\frac{3}{2} $",
+					"D. $ \\frac{1}{2} $",
+					"E. $ -\\frac{3}{2} $"
+				],
+				answer: 0,
+				solution: `<div class="solution-header">
+							<h5>Lời giải chi tiết</h5>
+							<div class="solution-audio">
+								<p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
+								<iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+								<br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
+							</div>
+						</div>
+						<p style="font-style: italic;">Phương trình: $ x^4 y^3 = 16 $.</p>
+						<p style="font-style: italic;">Lấy đạo hàm hai vế theo $ x $:</p>
+						<p style="font-style: italic;">Áp dụng quy tắc đạo hàm tích và chuỗi:</p>
+						<p style="font-style: italic;">\\[ \\frac{d}{dx}(x^4 y^3) = 4x^3 y^3 + x^4 \\cdot 3y^2 \\frac{dy}{dx} = 0 \\]</p>
+						<p style="font-style: italic;">Rút gọn:</p>
+						<p style="font-style: italic;">\\[ 4x^3 y^3 + 3x^4 y^2 \\frac{dy}{dx} = 0 \\]</p>
+						<p style="font-style: italic;">Giải để tìm $ \\frac{dy}{dx} $:</p>
+						<p style="font-style: italic;">\\[ 3x^4 y^2 \\frac{dy}{dx} = -4x^3 y^3 \\]</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = -\\frac{4x^3 y^3}{3x^4 y^2} \\]</p>
+						<p style="font-style: italic;">Tiếp tục rút gọn:</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = -\\frac{4y}{3x} \\]</p>
+						<p style="font-style: italic;">Thay $ x = 2 $, $ y = 1 $:</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = -\\frac{4 \\cdot 1}{3 \\cdot 2} = -\\frac{4}{6} = -\\frac{2}{3} \\]</p>
+						<p><strong>Vì đáp án này không có trong các lựa chọn → chọn: A. Không có đáp án nào đúng</strong></p>`
+			},
+			{
+				question: `Tìm $ \\frac{dy}{dx} $ bằng phương pháp đạo hàm ẩn từ phương trình $ 7y^2 - 5x^2 = 5 $.`,
+				options: [
+					"A. $ \\frac{5x}{7y} $",
+					"B. $ \\frac{5x}{7} $",
+					"C. $ \\frac{10x + 5}{14y} $",
+					"D. $ \\frac{5x^2}{14y} $",
+					"E. Không có đáp án nào đúng"
+				],
+				answer: 0,
+				solution: `<div class="solution-header">
+							<h5>Lời giải chi tiết</h5>
+							<div class="solution-audio">
+								<p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
+								<iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+								<br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
+							</div>
+						</div>
+						<p style="font-style: italic;">Phương trình: $ 7y^2 - 5x^2 = 5 $.</p>
+						<p style="font-style: italic;">Lấy đạo hàm hai vế theo $ x $:</p>
+						<p style="font-style: italic;">\\[ \\frac{d}{dx}(7y^2) - \\frac{d}{dx}(5x^2) = \\frac{d}{dx}(5) \\]</p>
+						<p style="font-style: italic;">\\[ 14y \\frac{dy}{dx} - 10x = 0 \\]</p>
+						<p style="font-style: italic;">Giải phương trình để tìm $ \\frac{dy}{dx} $:</p>
+						<p style="font-style: italic;">\\[ 14y \\frac{dy}{dx} = 10x \\]</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = \\frac{10x}{14y} = \\frac{5x}{7y} \\]</p>
+						<p><strong>Đáp án đúng là: $ \\frac{5x}{7y} $ → chọn A</strong></p>`
+			},
+			{
+				question: `Tính $ y' $ từ phương trình $ xy^3 + x^5y = 2x + 4y $.`,
+				options: [
+					"A. $ \\frac{y^3 + 5x^4y - 2}{4 - x^5 - 3xy^2} $",
+					"B. $ \\frac{2y^3 + 5x^4y + 2}{4 - x^5 - 3xy^2} $",
+					"C. $ \\frac{3y^2 + 5x^4y - 2x}{4 - x^5 - 3xy^2} $",
+					"D. $ \\frac{y^3 + 5x^4y - 2x}{4 - x^5 - 3xy^2} $",
+					"E. Không có đáp án nào đúng"
+				],
+				answer: 0,
+				solution: `<div class="solution-header">
+							<h5>Lời giải chi tiết</h5>
+							<div class="solution-audio">
+								<p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
+								<iframe width="300" height="60" src="https://vocaroo.com/embed/1fMwDZ7Rshwe?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+								<br><a href="https://voca.ro/1fMwDZ7Rshwe" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo >></a>
+							</div>
+						</div>
+						<p style="font-style: italic;">Phương trình: $ xy^3 + x^5y = 2x + 4y $.</p>
+						<p style="font-style: italic;">Lấy đạo hàm hai vế theo $ x $:</p>
+						<p style="font-style: italic;">\\[ y^3 + 3xy^2 \\frac{dy}{dx} + 5x^4y + x^5 \\frac{dy}{dx} = 2 + 4 \\frac{dy}{dx} \\]</p>
+						<p style="font-style: italic;">Nhóm các số hạng chứa $ \\frac{dy}{dx} $:</p>
+						<p style="font-style: italic;">\\[ 3xy^2 \\frac{dy}{dx} + x^5 \\frac{dy}{dx} - 4 \\frac{dy}{dx} = 2 - y^3 - 5x^4y \\]</p>
+						<p style="font-style: italic;">Đặt $ \\frac{dy}{dx} $ làm thừa số chung:</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} (3xy^2 + x^5 - 4) = 2 - y^3 - 5x^4y \\]</p>
+						<p style="font-style: italic;">Giải tìm $ \\frac{dy}{dx} $:</p>
+						<p style="font-style: italic;">\\[ \\frac{dy}{dx} = \\frac{2 - y^3 - 5x^4y}{3xy^2 + x^5 - 4} = \\frac{y^3 + 5x^4y - 2}{4 - x^5 - 3xy^2} \\]</p>
+						<p><strong>Đáp án đúng là: $ \\frac{y^3 + 5x^4y - 2}{4 - x^5 - 3xy^2} $ → chọn A</strong></p>`
+			}
+		];
             window.currentQuestion = 0;
             window.score = 0;
             window.quizAnswered = false;
             window.selectedAnswer = null;
 
-            loadQuestion();
-            renderMath();
+            // Initial rendering with slight delay to ensure DOM is ready
+            setTimeout(() => {
+                renderMath(document.body);
+                loadQuestion();
+            }, 100);
         });
 
-        function renderMath() {
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise().then(() => {
-                    console.log('MathJax rendering completed');
-                }).catch(err => {
-                    console.error('MathJax rendering failed:', err);
-                });
-            } else {
-                console.warn('MathJax is not loaded. Please check the script inclusion or network connectivity.');
-            }
+        function renderMath(container) {
+            if (!container) return;
+            renderMathInElement(container, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ],
+                strict: false,
+                throwOnError: false
+            });
         }
 
         window.showContent = function(type) {
@@ -800,14 +873,12 @@
 
             const toggleContent = document.querySelector('.toggle-content');
             toggleContent.textContent = '[Ẩn]';
-            slidesComponent.classList.remove('hidden');
-            videoComponent.classList.remove('hidden');
             if (type === 'slides') {
                 videoComponent.classList.add('hidden');
             } else {
                 slidesComponent.classList.add('hidden');
             }
-            renderMath(); // Re-render MathJax after content switch
+            setTimeout(() => renderMath(document.body), 100);
         }
 
         window.toggleContentVisibility = function() {
@@ -831,14 +902,14 @@
                 }
                 toggleContent.textContent = '[Hiện]';
             }
-            renderMath(); // Re-render MathJax after toggle
+            setTimeout(() => renderMath(document.body), 100);
         }
 
         function showSlide(index) {
             slides.forEach((slide, i) => slide.classList.toggle('active-slide', i === index));
             document.querySelector('.slides-wrapper').style.transform = `translateX(${-index * 100}%)`;
             currentSlideIndex = index;
-            renderMath(); // Re-render MathJax after slide change
+            setTimeout(() => renderMath(slides[index]), 100);
         }
         window.nextSlide = () => showSlide((currentSlideIndex + 1) % slides.length);
         window.prevSlide = () => showSlide((currentSlideIndex - 1 + slides.length) % slides.length);
@@ -852,7 +923,7 @@
             const optionsHTML = q.options.map((opt, i) => `
                 <div class="option" onclick="selectAnswer(${i}, this)">
                     <input type="radio" name="answer" value="${i}" id="opt${i}">
-                    <label for="opt${i}">(${String.fromCharCode(65 + i)}) \( ${opt} \)</label>
+                    <label for="opt${i}">${opt}</label>
                 </div>
             `).join('');
             
@@ -869,7 +940,7 @@
             document.getElementById('quizResult').textContent = '';
             
             updateProgress();
-            renderMath();
+            setTimeout(() => renderMath(quizContainer), 100);
         }
 
         window.selectAnswer = function(index, element) {
@@ -912,35 +983,26 @@
         }
         
         window.showSolution = function() {
-            const solutionContainer = document.getElementById('modalSolutionContent');
-            const q = quizData[currentQuestion];
-            const solutionHTML = `
-                <div class="modal-question">Câu ${currentQuestion + 1}: ${q.question}</div>
-                <div class="solution-box">${q.solution}</div>
-            `;
-            solutionContainer.innerHTML = solutionHTML;
-            document.getElementById('solutionModal').classList.remove('hidden');
-            
-            if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) {
-                window.MathJax.typesetClear(['#modalSolutionContent']);
-                setTimeout(() => {
-                    window.MathJax.typesetPromise(['#modalSolutionContent']).then(() => {
-                        console.log('MathJax rendering completed in modal');
-                    }).catch(err => {
-                        console.error('MathJax rendering failed in modal:', err);
-                    });
-                }, 50);
-            } else {
-                console.warn('MathJax is not loaded. Please check the script inclusion or network connectivity.');
-            }
-            
-            setTimeout(() => {
-                const solutionBox = solutionContainer.querySelector('.solution-box');
-                if (solutionBox) {
-                    solutionBox.classList.add('visible');
-                }
-            }, 10);
-        }
+			const solutionContainer = document.getElementById('modalSolutionContent');
+			const q = quizData[currentQuestion];
+			const solutionHTML = `
+				<div class="modal-question">Câu ${currentQuestion + 1}: ${q.question}</div>
+				${q.solution}
+			`;
+			solutionContainer.innerHTML = solutionHTML;
+			document.getElementById('solutionModal').classList.remove('hidden');
+			
+			setTimeout(() => {
+				const modalContent = document.getElementById('modalSolutionContent');
+				if (modalContent) {
+					renderMath(modalContent); // Render the entire modal content
+					const solutionBox = modalContent.querySelector('.lecture-content');
+					if (solutionBox) {
+						solutionBox.classList.add('visible');
+					}
+				}
+			}, 300); // Increased delay to 300ms to ensure DOM stability
+		}
 
         window.closeSolutionModal = function() {
             document.getElementById('solutionModal').classList.add('hidden');
