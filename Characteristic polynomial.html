@@ -842,35 +842,41 @@
         }
 
         window.showContent = function(type) {
-            const slidesComponent = document.getElementById('slidesComponent');
-            const videoComponent = document.getElementById('videoComponent');
-            const contentTitle = document.getElementById('contentTitle');
-            const buttons = document.querySelectorAll('.content-btn');
+			const slidesComponent = document.getElementById('slidesComponent');
+			const videoComponent = document.getElementById('videoComponent');
+			const contentTitle = document.getElementById('contentTitle');
+			const buttons = document.querySelectorAll('.content-btn');
+			const footnote = document.querySelector('.footnote');
+			const note = document.querySelector('.note');
 
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (type === 'slides') {
-                slidesComponent.classList.remove('hidden');
-                videoComponent.classList.add('hidden');
-                contentTitle.textContent = 'Slide';
-                document.querySelector('button[onclick="showContent(\'slides\')"]').classList.add('active');
-                currentContent = 'slides';
-            } else {
-                slidesComponent.classList.add('hidden');
-                videoComponent.classList.remove('hidden');
-                contentTitle.textContent = 'Bài giảng Video';
-                document.querySelector('button[onclick="showContent(\'video\')"]').classList.add('active');
-                currentContent = 'video';
-            }
+			buttons.forEach(btn => btn.classList.remove('active'));
+			if (type === 'slides') {
+				slidesComponent.classList.remove('hidden');
+				videoComponent.classList.add('hidden');
+				contentTitle.textContent = 'Slide';
+				document.querySelector('button[onclick="showContent(\'slides\')"]').classList.add('active');
+				currentContent = 'slides';
+				footnote.classList.remove('visible');
+				note.classList.remove('visible');
+			} else {
+				slidesComponent.classList.add('hidden');
+				videoComponent.classList.remove('hidden');
+				contentTitle.innerHTML = 'Bài giảng Video<br><span style="font-size: 0.45em; display: block;">Nếu có chỗ nào chưa chính xác, mong các bạn để lại bình luận góp ý trên YouTube nhé! Xin cảm ơn sự đồng hành!</span>';
+				document.querySelector('button[onclick="showContent(\'video\')"]').classList.add('active');
+				currentContent = 'video';
+				footnote.classList.add('visible');
+				note.classList.add('visible');
+			}
 
-            const toggleContent = document.querySelector('.toggle-content');
-            toggleContent.textContent = '[Ẩn]';
-            if (type === 'slides') {
-                videoComponent.classList.add('hidden');
-            } else {
-                slidesComponent.classList.add('hidden');
-            }
-            setTimeout(() => renderMath(document.body), 100);
-        }
+			const toggleContent = document.querySelector('.toggle-content');
+			toggleContent.textContent = '[Ẩn]';
+			if (type === 'slides') {
+				videoComponent.classList.add('hidden');
+			} else {
+				slidesComponent.classList.add('hidden');
+			}
+			setTimeout(() => renderMath(document.body), 100);
+		};
 
         window.toggleContentVisibility = function() {
             const slidesComponent = document.getElementById('slidesComponent');
