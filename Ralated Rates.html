@@ -762,7 +762,7 @@
             } else {
                 slidesComponent.classList.add('hidden');
                 videoComponent.classList.remove('hidden');
-                contentTitle.textContent = 'Bài giảng Video';
+                contentTitle.innerHTML = 'Bài giảng Video<br><span style="font-size: 0.45em; display: block;">Nếu có chỗ nào chưa chính xác, mong các bạn để lại bình luận góp ý trên YouTube nhé! Xin cảm ơn sự đồng hành!</span>';
                 document.querySelector('button[onclick="showContent(\'video\')"]').classList.add('active');
                 currentContent = 'video';
             }
