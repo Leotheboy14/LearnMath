@@ -672,22 +672,36 @@
 
             window.quizData = [
                 {
-                    question: `Một bồn nước hình trụ có chiều cao 10 mét và bán kính đáy 3 mét. Nước được bơm vào bồn với tốc độ không đổi là \\( 5 \\ \\text{m}^3/\\text{phút} \\). Hỏi mực nước đang dâng lên với tốc độ bao nhiêu khi nước trong bồn cao 4 mét?`,
-                    options: ["\\frac{5}{9\\pi}", "\\frac{5}{\\pi}", "\\frac{5}{3\\pi}", "\\frac{5}{6\\pi}"],
-                    answer: 0,
+                    question: `A cylindrical tank is being filled with water at a constant rate of 3 m³/min. Find the rate at which the water level is rising when the radius of the tank is 5 m.`,
+                    options: [
+                        "A. 3/(25π) m/min",
+                        "B. 3/(5π) m/min",
+                        "C. 3π/5 m/min",
+                        "D. 25π/3 m/min",
+                        "E. None of the other choices is correct"
+                    ],
+                    answer: 0, // A is correct (index 0 in 0-based array)
                     solution: `<div class="solution-header">
                                     <h5>Lời giải chi tiết</h5>
                                     <div class="solution-audio">
-                                        <p>Ấn vào để nghe thuyết minh lời giải bên dưới:</p>
-                                        <iframe width="300" height="60" src="https://vocaroo.com/embed/19QIUUhSBge6?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-                                        <br><a href="https://voca.ro/19QIUUhSBge6" title="Vocaroo Voice Recorder" target="_blank">Xem trên Vocaroo >></a>
+                                        <p>Nhấn vào để nghe lời giải thích bên dưới:</p>
+                                        <iframe width="300" height="60" src="https://vocaroo.com/embed/example7?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                                        <br><a href="https://voca.ro/example7" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
                                     </div>
-                               </div>
-                               <p><strong>Bước 1. Gán biến:</strong> \\( h \\) là chiều cao nước, \\( V \\) là thể tích. Cho \\( \\frac{dV}{dt} = 5 \\ \\text{m}^3/\\text{phút} \\).</p>
-                               <p><strong>Bước 2. Thể tích hình trụ:</strong> \\( V = \\pi r^2 h = \\pi \\cdot 9 \\cdot h = 9\\pi h \\).</p>
-                               <p><strong>Bước 3. Lấy đạo hàm:</strong> \\( \\frac{dV}{dt} = 9\\pi \\cdot \\frac{dh}{dt} \\).</p>
-                               <p><strong>Bước 4. Thay số:</strong> \\( 5 = 9\\pi \\cdot \\frac{dh}{dt} \\Rightarrow \\frac{dh}{dt} = \\frac{5}{9\\pi} \\).</p>
-                               <p><strong>Kết luận:</strong> Tốc độ dâng mực nước là \\( \\boxed{\\frac{5}{9\\pi} \\ \\text{m/phút}} \\).</p>`
+                                </div>
+                                <p><strong>Bước 1. Công thức thể tích hình trụ:</strong> \\[ V = \pi r^2 h \\]</p>
+                                <p><strong>Bước 2. Lấy đạo hàm theo thời gian:</strong> 
+                                   \\[ \frac{dV}{dt} = \pi r^2 \frac{dh}{dt} \\]
+                                </p>
+                                <p><strong>Bước 3. Thay giá trị đã biết:</strong>
+                                   \\[ 3 = \pi (5)^2 \frac{dh}{dt} \\]
+                                   \\[ 3 = 25\pi \frac{dh}{dt} \\]
+                                </p>
+                                <p><strong>Bước 4. Giải để tìm tốc độ dâng nước:</strong>
+                                   \\[ \frac{dh}{dt} = \frac{3}{25\pi} \text{ m/min} \\]
+                                </p>
+                                <p><strong>Kết luận:</strong> 
+                                   Mực nước đang dâng lên với tốc độ \\( \frac{3}{25\pi} \\) m/phút.</p>`
                 },
                 {
                     question: `Một cái thang dài 10 mét đang được kéo dọc theo mặt đất với tốc độ 1 m/s, trong khi phần đầu thang đang tựa vào tường trượt xuống. Hỏi phần đầu thang đang rơi xuống với tốc độ bao nhiêu khi chân thang cách tường 6 mét?`,
