@@ -638,8 +638,34 @@
 								<p><strong>Bước 2. Tìm điểm cực trị:</strong> Vì \\( f'(x) \\neq 0 \\) trên \\([1/2, 2]\\), không có điểm cực trị trong đoạn.</p>
 								<p><strong>Bước 3. Đánh giá tại điểm đầu và cuối:</strong> \\( f(1/2) = -4 \\), \\( f(2) = -1/4 \\).</p>
 								<p><strong>Kết luận:</strong> Giá trị lớn nhất tuyệt đối là \\(-1/4\\), và giá trị nhỏ nhất tuyệt đối là \\(-4\\).</p>`
-				}
-            ];
+				},
+				{
+					question: `Find the absolute maximum and absolute minimum values of<br>\\[ f(x) = -6 - 10x - 5x^2 \\] on \\([-2, 1]\\).`,
+					options: [
+						"A. Absolute maximum: -1, absolute minimum: -21",
+						"B. Absolute maximum: -6, absolute minimum: -11",
+						"C. Absolute maximum: 11, absolute minimum: -11",
+						"D. Absolute maximum: 11, absolute minimum: -21",
+						"E. None of the other choices is correct"
+					],
+					answer: 3, // D is correct (index 3 in 0-based array)
+					solution: `<div class="solution-header">
+									<h5>Detailed Solution</h5>
+									<div class="solution-audio">
+										<p>Click to listen to the solution:</p>
+										<iframe width="300" height="60" src="https://vocaroo.com/embed/new_recording" frameborder="0" allow="autoplay"></iframe>
+									</div>
+								</div>
+								<p><strong>Step 1. Find derivative:</strong> \\[ f'(x) = -10 - 10x \\]</p>
+								<p><strong>Step 2. Find critical points:</strong> \\[ -10 - 10x = 0 \\Rightarrow x = -1 \\]</p>
+								<p><strong>Step 3. Evaluate function:</strong>
+								   \\[ f(-2) = -6 - 10(-2) - 5(-2)^2 = -6 \\]
+								   \\[ f(-1) = -6 - 10(-1) - 5(-1)^2 = -1 \\]
+								   \\[ f(1) = -6 - 10(1) - 5(1)^2 = -21 \\]
+								</p>
+								<p><strong>Conclusion:</strong> Absolute maximum is -1, absolute minimum is -21.</p>`
+				}            
+			];
             
             window.currentQuestion = 0;
             window.score = 0;
