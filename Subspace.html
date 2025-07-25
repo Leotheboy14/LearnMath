@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Học và Luyện tập: Nhận diện Không gian Vecto Con</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #f0f4f8;
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --border-color: rgba(209, 213, 219, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --font-main: 'Inter', sans-serif;
+            --solution-bg: #f8f9fa;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: var(--primary-bg);
+            background-image: radial-gradient(circle at top left, #a1c4fd, #c2e9fb);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 24px;
+            box-sizing: border-box;
+            gap: 24px;
+        }
+
+        .panel {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 10px 35px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .panel-left { flex-basis: 58%; }
+        .panel-right { flex-basis: 42%; }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+        
+        h2 { font-size: 1.6em; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 24px; }
+        h3 { font-size: 1.3em; margin-bottom: 18px; }
+        h4 { font-size: 1.15em; color: var(--accent-color); margin-bottom: 10px; }
+
+        .content-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .content-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            background-color: transparent;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .content-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .content-btn:hover:not(.active) {
+            background-color: var(--accent-hover);
+            color: white;
+        }
+
+        .content-section { 
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-header { 
+            width: 100%;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 15px;
+        }
+
+        .slider-container, .video-container { 
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden; 
+            position: relative; 
+            background-color: #1f2937; 
+            border-radius: 16px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .slides-wrapper { 
+            display: flex; 
+            height: 100%; 
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        .slide { 
+            flex: 0 0 100%; 
+            width: 100%; 
+            height: 100%; 
+            box-sizing: border-box; 
+            padding: 20px 30px;
+            color: #e5e7eb; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            opacity: 0; 
+            transform: translateX(20px); 
+            transition: opacity 0.6s ease, transform 0.6s ease; 
+        }
+
+        .slide.active-slide { opacity: 1; transform: translateX(0); }
+        
+        .slide .slide-title { 
+            font-size: 1.5em;
+            font-weight: 700; 
+            color: #d1d5db; 
+            border-bottom: 1px solid #4b5563; 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+        }
+        
+        .slide p, .slide ul { 
+            text-align: left; 
+            max-width: 95%; 
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        
+        .slide .info-block { 
+            background-color: rgba(255, 255, 255, 0.05); 
+            padding: 12px 15px;
+            border-radius: 8px; 
+            margin-top: 12px; 
+            border-left: 4px solid var(--accent-color); 
+            text-align: left; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+
+        .slide .result-block { 
+            background-color: rgba(34, 197, 94, 0.1); 
+            border-left: 4px solid var(--success-color); 
+            color: #a7f3d0; 
+        }
+
+        .slider-nav { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 0 15px; 
+            box-sizing: border-box; 
+            opacity: 0; 
+            transition: opacity 0.3s ease; 
+        }
+
+        .slider-container:hover .slider-nav { opacity: 1; }
+        
+        .slider-nav button { 
+            background-color: rgba(0, 0, 0, 0.4); 
+            color: white; 
+            border: none; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: background-color 0.3s, transform 0.3s; 
+        }
+
+        .slider-nav button:hover { 
+            background-color: rgba(0, 0, 0, 0.7); 
+            transform: scale(1.1); 
+        }
+
+        .video-container iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .video-container {
+            position: relative;
+        }
+
+        .video-container .strbl-watermark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transform: scale(0.5);
+            transform-origin: top right;
+            z-index: 10;
+        }
+
+        .hidden { display: none !important; }
+
+        .lecture-container { flex-grow: 1; overflow-y: auto; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); }
+        .lecture-content ol { padding-left: 25px; }
+
+        .audio-section { margin-bottom: 24px; }
+        .audio-section iframe { border-radius: 12px; box-shadow: 0 2px 10px var(--shadow-color); }
+        .audio-section a { font-size: 12px; color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .audio-section a:hover { color: var(--accent-hover); }
+
+        .quiz-wrapper { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; border-top: 1px solid var(--border-color); margin-top: 24px; padding-top: 24px; }
+        .quiz-progress { width: 100%; background-color: #e5e7eb; border-radius: 10px; height: 10px; margin-bottom: 10px; overflow: hidden; }
+        .progress-bar { width: 0; height: 100%; background-color: var(--accent-color); border-radius: 10px; transition: width 0.5s ease-out; }
+        .progress-text { text-align: right; font-size: 0.9em; font-weight: 500; color: var(--text-secondary); margin-bottom: 20px; }
+        .question { margin-bottom: 15px; font-size: 1.1em; font-weight: 500; }
+        .option { display: flex; align-items: center; margin: 10px 0; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 8px; cursor: pointer; transition: all 0.2s ease-in-out; }
+        .option:hover { border-color: var(--accent-color); background-color: #eff6ff; }
+        .option.selected { border-color: var(--accent-color); background-color: #dbeafe; }
+        .option.correct { background-color: #dcfce7; border-color: var(--success-color); color: #15803d; font-weight: 600; }
+        .option.incorrect { background-color: #fee2e2; border-color: var(--error-color); color: #b91c1c; }
+        .option input { display: none; }
+        .option label { flex-grow: 1; pointer-events: none; }
+
+        .solution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--solution-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .solution-box.visible { opacity: 1; transform: translateY(0); }
+        
+        .solution-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .solution-header h5 {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--text-primary);
+            border-bottom: none; 
+            padding-bottom: 0;
+        }
+        
+        .solution-audio {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            width: 45%;
+            max-width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .solution-audio p {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            margin: 0 0 5px 0;
+        }
+
+        .solution-audio iframe {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            width: 100%;
+        }
+
+        .solution-audio a {
+            display: block;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-top: 5px;
+            opacity: 0.8;
+            transition: color 0.3s, opacity 0.3s;
+        }
+
+        .solution-audio a:hover {
+            color: var(--accent-hover);
+            opacity: 1;
+        }
+
+        .solution-box .method-title { font-weight: 600; color: var(--accent-color); margin-top: 15px; }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            box-sizing: border-box;
+        }
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--solution-bg);
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: color 0.3s;
+        }
+        .close-modal:hover {
+            color: var(--accent-hover);
+        }
+        .modal.hidden {
+            display: none;
+        }
+        .modal-question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-footer { margin-top: 25px; text-align: center; }
+        .quiz-footer button { 
+            padding: 12px 25px; 
+            font-size: 1em; 
+            font-weight: 600; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            color: white; 
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); 
+            margin: 0 5px;
+        }
+        .quiz-footer button:disabled { 
+            background-color: #9ca3af; 
+            cursor: not-allowed; 
+            box-shadow: none; 
+        }
+        #submitAnswerBtn { background-color: #10b981; }
+        #submitAnswerBtn:not(:disabled):hover { background-color: #059669; transform: translateY(-2px); }
+        #viewSolutionBtn { background-color: #8b5cf6; }
+        #viewSolutionBtn:not(:disabled):hover { background-color: #7c3aed; transform: translateY(-2px); }
+        #nextQuestionBtn { background-color: var(--accent-color); }
+        #nextQuestionBtn:not(:disabled):hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+        #resetQuizBtn { background-color: #6b7280; }
+        #resetQuizBtn:not(:disabled):hover { background-color: #4b5563; transform: translateY(-2px); }
+        #quizResult { font-weight: 700; font-size: 1.25em; margin-bottom: 15px; }
+
+        @media (max-width: 1200px) {
+            .main-container { flex-direction: column; height: auto; overflow-y: auto; }
+            .panel { flex-basis: auto; height: auto; backdrop-filter: none; background: #fff; }
+            .panel-left { margin-right: 0; margin-bottom: 24px; }
+            .modal-content { max-width: 95%; }
+        }
+        
+        @media (max-width: 900px) {
+            .slider-container, .video-container { max-width: 100%; }
+            .modal-content { max-width: 95%; }
+        }
+        
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            .main-container, .panel { padding: 15px; }
+            h2 { font-size: 1.3em; } 
+            h3 { font-size: 1.15em; }
+            .slider-container, .video-container { aspect-ratio: 4/3; }
+            .slide { padding: 15px 20px; }
+            .slide .slide-title { font-size: 1.3em; }
+            .modal-content { max-height: 85vh; padding: 15px; }
+            .quiz-footer button { padding: 10px 20px; font-size: 0.9em; }
+            .solution-header { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 15px;
+            }
+            .solution-audio { 
+                width: 100%;
+                max-width: none;
+                align-items: flex-start;
+            }
+            .content-btn { padding: 8px 15px; font-size: 0.9em; }
+            .video-container .strbl-watermark { transform: scale(0.4); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="panel panel-left">
+            <div class="content-section">
+                <div class="content-wrapper">
+                    <div class="content-selector">
+                        <button class="content-btn active" onclick="showContent('slides')">Slide</button>
+                        <button class="content-btn" onclick="showContent('video')">Bài giảng video</button>
+                    </div>
+                    <div class="content-header">
+                        <h2 id="contentTitle">Slide</h2>
+                        <span class="toggle-content" onclick="toggleContentVisibility()">[Ẩn]</span>
+                    </div>
+                    <div id="slidesComponent" class="slider-container">
+                        <div class="slides-wrapper"></div>
+                        <div class="slider-nav">
+                            <button class="prev-btn" onclick="prevSlide()">❮</button>
+                            <button class="next-btn" onclick="nextSlide()">❯</button>
+                        </div>
+                    </div>
+                    <div id="videoComponent" class="video-container hidden">
+                        <div style="position:relative; width:100%; height:0px; padding-bottom:56.250%">
+                            <iframe width="1513" height="617" src="https://www.youtube.com/embed/6vZz5LTMKbk" title="Không gian vectơ con (Subspace)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lecture-container">
+				<h2>Bài giảng Chi tiết</h2>
+				<div class="lecture-content">
+					<h3>Khái niệm về Subspace (Không gian Vecto Con)</h3>
+					<p>Một tập hợp \( W \subseteq V \) được gọi là <strong>subspace</strong> (không gian vectơ con) của một vector space \( V \) nếu:</p>
+					<ul>
+					  <li><strong>Chứa vectơ không:</strong> \( \vec{0} \in W \).</li>
+					  <li><strong>Mô tả bởi phương trình tuyến tính:</strong> Điều kiện xác định \( W \) phải có dạng phương trình tuyến tính bậc nhất (ví dụ: \( x + y + z = 0 \), \( x = 2y \), ...).</li>
+					</ul>
+					<p>Nếu cả hai điều kiện trên đều thỏa mãn, thì \( W \) là một subspace của \( V \).</p>
+
+					<h3>Cách kiểm tra không gian vectơ con (How to check a Subspace)</h3>
+					<ol>
+					  <li><strong>Bước 1 – Kiểm tra vectơ không:</strong> Thay các giá trị bằng 0 vào điều kiện của tập \( W \) để kiểm tra xem \( \vec{0} \in W \).</li>
+					  <li><strong>Bước 2 – Kiểm tra tính tuyến tính:</strong> Xem xét điều kiện mô tả \( W \) có phải là phương trình tuyến tính bậc nhất không (không chứa tích giữa các biến, không có căn, không có lũy thừa bậc cao).</li>
+					</ol>
+					<p>Nếu một trong hai điều kiện không thỏa, thì \( W \) không phải là subspace.</p>
+
+					<h4>Illustrative Example (Ví dụ minh họa)</h4>
+					<p>Xét \( V = \mathbb{R}^3 \), và tập con \( W = \{ (x, y, z) \in \mathbb{R}^3 \mid x + y + z = 0 \} \).</p>
+					<p><strong>Bước 1:</strong> Kiểm tra vectơ không: Thay \( x = y = z = 0 \) vào ta được \( 0 + 0 + 0 = 0 \Rightarrow (0, 0, 0) \in W \).</p>
+					<p><strong>Bước 2:</strong> Điều kiện \( x + y + z = 0 \) là một phương trình tuyến tính bậc nhất.</p>
+					<p><strong>Kết luận:</strong> \( W \) là một subspace của \( \mathbb{R}^3 \).</p>
+				</div>
+			</div>
+        </div>
+        
+        <div class="panel panel-right">
+            <div class="audio-section">
+                <h3>Âm thanh giảng bài</h3>
+                <div>
+                    <iframe width="300" height="60" src="https://vocaroo.com/embed/1AuJZMVjnlbt?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+                    <br>
+                    <a href="https://voca.ro/1AuJZMVjnlbt" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
+                </div>
+            </div>
+            <div class="quiz-wrapper">
+                <h3>Bài tập Củng cố</h3>
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text" id="progressText"></div>
+                
+                <div id="quizContainer"></div>
+                <div id="solutionContainer"></div>
+                
+                <div class="quiz-footer">
+                    <div id="quizResult"></div>
+                    <button id="submitAnswerBtn" onclick="submitAnswer()" style="display: none;">Nộp Đáp Án</button>
+                    <button id="viewSolutionBtn" onclick="showSolution()" style="display: none;">Xem Lời Giải</button>
+                    <button id="nextQuestionBtn" onclick="nextQuestion()" style="display: none;">Câu tiếp theo</button>
+                    <button id="resetQuizBtn" onclick="resetQuiz()" style="display: none;">Làm lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="solutionModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSolutionModal()">×</span>
+            <div id="modalSolutionContent"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slideData = [
+                {
+				  title: 'Khái niệm về Không gian Vecto Con',
+				  content: `<div class="info-block">
+							  <p>Một tập hợp \\( W \\subseteq V \\) là <strong>không gian vectơ con</strong> (subspace) của không gian vectơ \\( V \\) nếu thoả mãn hai điều kiện sau:</p>
+							  <ul>
+								<li><strong>Chứa vectơ không (zero vector):</strong> \\( \\vec{0} \\in W \\).</li>
+								<li><strong>Là một quan hệ tuyến tính (linear condition):</strong> Điều kiện mô tả tập \\( W \\) phải có dạng phương trình tuyến tính (bậc nhất) như \\( ax + by + cz = 0 \\).</li>
+							  </ul>
+							  <p>Nếu thoả mãn cả hai điều kiện trên, ta có thể kết luận \\( W \\) là một không gian vectơ con mà không cần kiểm tra thêm.</p>
+							</div>`
+				},
+				{
+				  title: 'Cách Kiểm tra Không gian Vecto Con',
+				  content: `
+					<div style="text-align: left;">
+					  <strong>Bước 1 (Chứa vectơ 0):</strong> Kiểm tra \\( \\vec{0} \\in W \\).<br>
+					  <strong>Bước 2 (Tuyến tính):</strong> Kiểm tra điều kiện mô tả tập \\( W \\) có dạng phương trình tuyến tính bậc nhất (không có lũy thừa, tích các biến, hoặc căn).<br>
+					  <p><em>Ví dụ các dạng được chấp nhận:</em> \\( x = 2y \\), \\( x + y + z = 0 \\), \\( a_1x + a_2y + a_3z = 0 \\)</p>
+					  <p><em>Ví dụ các dạng bị loại:</em> \\( xy = 0 \\), \\( x^2 + y^2 = 1 \\), \\( \\sqrt{x} = y \\)</p>
+					</div>
+				  `
+				},
+				{
+				  title: 'Ví dụ Minh họa',
+				  content: `<div class="info-block">
+							  <p>Xét \\( V = \\mathbb{R}^3 \\), \\( W = \\{ (x, y, z) \\in \\mathbb{R}^3 \\mid x + y + z = 0 \\} \\).</p>
+							  <p><strong>Bước 1:</strong> \\( (0, 0, 0) \\in W \\) vì \\( 0 + 0 + 0 = 0 \\).</p>
+							  <p><strong>Bước 2:</strong> Điều kiện \\( x + y + z = 0 \\) là một phương trình tuyến tính.</p>
+							  <p><strong>Kết luận:</strong> \\( W \\) là một không gian vectơ con của \\( \\mathbb{R}^3 \\).</p>
+							</div>`
+				}
+			];
+            
+            const slidesWrapper = document.querySelector('.slides-wrapper');
+            slidesWrapper.innerHTML = slideData.map((s, index) => `
+                <div class="slide ${index === 0 ? 'active-slide' : ''}" data-index="${index}">
+                    <div class="slide-title">${s.title}</div>
+                    <div class="slide-content">${s.content}</div>
+                </div>
+            `).join('');
+
+            window.slides = document.querySelectorAll('.slide');
+            window.currentSlideIndex = 0;
+            window.currentContent = 'slides';
+
+            window.quizData = [
+                {
+					question: `Which of the following are subspaces?\n\n\<br>[U = \{(x, y)| x = 2y\}\]</br>\n\n\[V = \{(x, y)| xy = 0\}\]`,
+					options: [
+						"A. Both U and V",
+						"B. U only",
+						"C. None of U and V",
+						"D. V only"
+					],
+					answer: 1, // B is correct (U only)
+					solution: `<div class="solution-header">
+						<h5>Lời giải chi tiết</h5>
+						<div class="solution-audio">
+							<p>Nhấn vào để nghe lời giải thích bên dưới:</p>
+							<iframe width="300" height="60" src="https://vocaroo.com/embed/17kmWZ9Z1I7V?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+							<br><a href="https://voca.ro/17kmWZ9Z1I7V" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
+						</div>
+					</div>
+					<p><strong>Bước 1: Kiểm tra tập U</strong></p>
+					<p>U là nghiệm của phương trình tuyến tính x = 2y, chứa vector 0 và là không gian con.</p>
+
+					<p><strong>Bước 2: Kiểm tra tập V</strong></p>
+					<p>V là nghiệm của phương trình không tuyến tính (xy = 0), không đóng với phép cộng.</p>
+
+					<p><strong>Kết luận:</strong> Chỉ có U là không gian con. Đáp án đúng là <strong>B. U only</strong>.</p>`
+				},
+                {
+					question: `Which of the followings are subspaces of \\(\\mathbb{R}^3\\)?\n\n<br>(i) \\( U = \\{(x, y, z + 1) \\mid x, y, z \\in \\mathbb{R}\\} \\)\n\n<br>(ii) \\( U = \\{(x, y, z) \\mid x + 2y - 3z = 0\\} \\)\n\n<br>(iii) \\( U = \\{(x, y, z) \\mid x^2 + y^2 + z^2 = 1\\} \\)`,
+					options: [
+						"A. (i)",
+						"B. (ii)",
+						"C. (ii) and (iii)",
+						"D. (i) and (ii)"
+					],
+					answer: 1, // B is correct (index 1 corresponds to option (ii))
+					solution: `<div class="solution-header">
+							<h5>Lời giải chi tiết</h5>
+							<div class="solution-audio">
+								<p>Nhấn vào để nghe lời giải thích bên dưới:</p>
+								<iframe width="300" height="60" src="https://vocaroo.com/embed/1ou74d0t7SRc?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+								<br><a href="https://voca.ro/1ou74d0t7SRc" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
+							</div>
+						</div>
+						<p><strong>Kiểm tra từng tập hợp:</strong></p>
+
+						<p><strong>(i)</strong> là tập không chứa vector 0 (vì z + 1 ≠ 0) nên không thể là không gian con.</p>
+
+						<p><strong>(ii)</strong> là nghiệm của phương trình tuyến tính đồng nhất nên là không gian con.</p>
+
+						<p><strong>(iii)</strong> là tập các điểm thuộc mặt cầu (không tuyến tính) nên không là không gian con.</p>
+
+						<p><strong>Kết luận:</strong> Chỉ có (ii) là không gian con. Đáp án đúng là <strong>B. (ii)</strong>.</p>`
+				},
+				{
+					question: `Which of the following sets are subspaces of \\(\\mathbb{R}^3\\)?\n\n<br>(i) \\( U = \\{(x, y, 0) \\mid x, y \\in \\mathbb{R}\\} \\)\n\n<br>(ii) \\( U = \\{(x, y, z) \\mid x + y + z = 1\\} \\)\n\n<br>(iii) \\( U = \\{(x, y, z) \\mid x = y = z\\} \\)`,
+					options: [
+						"A. (i) only",
+						"B. (ii) only",
+						"C. (i) and (iii) only",
+						"D. All of them"
+					],
+					answer: 2, // C is correct (index 2 corresponds to options (i) and (iii))
+					solution: `<div class="solution-header">
+									<h5>Lời giải chi tiết</h5>
+									<div class="solution-audio">
+										<p>Nhấn vào để nghe lời giải thích bên dưới:</p>
+										<iframe width="300" height="60" src="https://vocaroo.com/embed/1mw35HiwZj06?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+										<br><a href="https://voca.ro/1mw35HiwZj06" title="Vocaroo Voice Recorder" target="_blank">View on Vocaroo &gt;&gt;</a>
+									</div>
+								</div>
+								<p><strong>Phân tích từng tập hợp:</strong></p>
+
+								<p><strong>(i)</strong> là tập các vectơ có z = 0, tuyến tính, chứa 0, nên là không gian con.</p>
+
+								<p><strong>(ii)</strong> là nghiệm của phương trình x + y + z = 1 (không đồng nhất), nên không chứa vector 0 → không là không gian con.</p>
+
+								<p><strong>(iii)</strong> là tập các vectơ có x = y = z, biểu diễn được dưới dạng (a,a,a), là tuyến tính → là không gian con.</p>
+
+								<p><strong>Kết luận:</strong> (i) và (iii) là không gian con. Đáp án đúng là <strong>C. (i) and (iii) only</strong>.</p>`
+				}
+            ];
+            
+            window.currentQuestion = 0;
+            window.score = 0;
+            window.quizAnswered = false;
+            window.selectedAnswer = null;
+
+            loadQuestion();
+            renderMath();
+        });
+
+        function renderMath() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise().catch(err => {
+                    console.error('MathJax rendering failed:', err);
+                });
+            } else {
+                console.warn('MathJax is not loaded. Please check the script inclusion or network connectivity.');
+            }
+        }
+
+        window.showContent = function(type) {
+            const slidesComponent = document.getElementById('slidesComponent');
+            const videoComponent = document.getElementById('videoComponent');
+            const contentTitle = document.getElementById('contentTitle');
+            const buttons = document.querySelectorAll('.content-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (type === 'slides') {
+                slidesComponent.classList.remove('hidden');
+                videoComponent.classList.add('hidden');
+                contentTitle.textContent = 'Slide';
+                document.querySelector('button[onclick="showContent(\'slides\')"]').classList.add('active');
+                currentContent = 'slides';
+            } else {
+                slidesComponent.classList.add('hidden');
+                videoComponent.classList.remove('hidden');
+                contentTitle.innerHTML = 'Bài giảng Video<br><span style="font-size: 0.45em; display: block;">Nếu có chỗ nào chưa chính xác, mong các bạn để lại bình luận góp ý trên YouTube nhé! Xin cảm ơn sự đồng hành!</span>';
+                document.querySelector('button[onclick="showContent(\'video\')"]').classList.add('active');
+                currentContent = 'video';
+            }
+
+            const toggleContent = document.querySelector('.toggle-content');
+            toggleContent.textContent = '[Ẩn]';
+            slidesComponent.classList.remove('hidden');
+            videoComponent.classList.remove('hidden');
+            if (type === 'slides') {
+                videoComponent.classList.add('hidden');
+            } else {
+                slidesComponent.classList.add('hidden');
+            }
+        }
+
+        window.toggleContentVisibility = function() {
+            const slidesComponent = document.getElementById('slidesComponent');
+            const videoComponent = document.getElementById('videoComponent');
+            const toggleContent = document.querySelector('.toggle-content');
+            const isHidden = currentContent === 'slides' ? slidesComponent.classList.contains('hidden') : videoComponent.classList.contains('hidden');
+
+            if (isHidden) {
+                if (currentContent === 'slides') {
+                    slidesComponent.classList.remove('hidden');
+                } else {
+                    videoComponent.classList.remove('hidden');
+                }
+                toggleContent.textContent = '[Ẩn]';
+            } else {
+                if (currentContent === 'slides') {
+                    slidesComponent.classList.add('hidden');
+                } else {
+                    videoComponent.classList.add('hidden');
+                }
+                toggleContent.textContent = '[Hiện]';
+            }
+        }
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => slide.classList.toggle('active-slide', i === index));
+            document.querySelector('.slides-wrapper').style.transform = `translateX(${-index * 100}%)`;
+            currentSlideIndex = index;
+        }
+        window.nextSlide = () => showSlide((currentSlideIndex + 1) % slides.length);
+        window.prevSlide = () => showSlide((currentSlideIndex - 1 + slides.length) % slides.length);
+
+        function loadQuestion() {
+            quizAnswered = false;
+            selectedAnswer = null;
+            const q = quizData[currentQuestion];
+            const quizContainer = document.getElementById('quizContainer');
+            
+            const optionsHTML = q.options.map((opt, i) => `
+                <div class="option" onclick="selectAnswer(${i}, this)">
+                    <input type="radio" name="answer" value="${i}" id="opt${i}">
+                    <label for="opt${i}">${opt}</label>
+                </div>
+            `).join('');
+            
+            quizContainer.innerHTML = `
+                <div class='question'>Câu ${currentQuestion + 1}: ${q.question}</div>
+                <div class="options-container">${optionsHTML}</div>
+            `;
+            document.getElementById('solutionContainer').innerHTML = '';
+            document.getElementById('solutionModal').classList.add('hidden');
+            document.getElementById('modalSolutionContent').innerHTML = '';
+            document.getElementById('submitAnswerBtn').style.display = 'none';
+            document.getElementById('viewSolutionBtn').style.display = 'none';
+            document.getElementById('nextQuestionBtn').style.display = 'none';
+            document.getElementById('quizResult').textContent = '';
+            
+            updateProgress();
+            renderMath();
+        }
+
+        window.selectAnswer = function(index, element) {
+            if (quizAnswered) return;
+            const options = document.querySelectorAll('.option');
+            
+            if (selectedAnswer === index) {
+                options.forEach(opt => opt.classList.remove('selected'));
+                selectedAnswer = null;
+                document.getElementById('submitAnswerBtn').style.display = 'none';
+            } else {
+                options.forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                selectedAnswer = index;
+                document.getElementById('submitAnswerBtn').style.display = 'inline-block';
+            }
+        }
+
+        window.submitAnswer = function() {
+            if (!quizAnswered && selectedAnswer !== null) {
+                quizAnswered = true;
+                const correctAnswerIndex = quizData[currentQuestion].answer;
+                const options = document.querySelectorAll('.option');
+                
+                if (selectedAnswer === correctAnswerIndex) {
+                    score++;
+                    options[selectedAnswer].classList.add('correct');
+                } else {
+                    options[selectedAnswer].classList.add('incorrect');
+                    if (correctAnswerIndex !== null) {
+                        options[correctAnswerIndex].classList.add('correct');
+                    }
+                }
+                
+                options.forEach(opt => opt.style.pointerEvents = 'none');
+                document.getElementById('submitAnswerBtn').style.display = 'none';
+                document.getElementById('viewSolutionBtn').style.display = 'inline-block';
+                document.getElementById('nextQuestionBtn').style.display = 'inline-block';
+            }
+        }
+        
+        window.showSolution = function() {
+            const solutionContainer = document.getElementById('modalSolutionContent');
+            const q = quizData[currentQuestion];
+            const solutionHTML = `
+                <div class="modal-question">Câu ${currentQuestion + 1}: ${q.question}</div>
+                <div class="solution-box">${q.solution}</div>
+            `;
+            solutionContainer.innerHTML = solutionHTML;
+            document.getElementById('solutionModal').classList.remove('hidden');
+            
+            if (window.MathJax && window.MathJax.typesetClear && window.MathJax.typesetPromise) {
+                window.MathJax.typesetClear(['#modalSolutionContent']);
+                setTimeout(() => {
+                    window.MathJax.typesetPromise(['#modalSolutionContent']).catch(err => {
+                        console.error('MathJax rendering failed in modal:', err);
+                    });
+                }, 50);
+            } else {
+                console.warn('MathJax is not loaded. Please check the script inclusion or network connectivity.');
+            }
+            
+            setTimeout(() => {
+                const solutionBox = solutionContainer.querySelector('.solution-box');
+                if (solutionBox) {
+                    solutionBox.classList.add('visible');
+                }
+            }, 10);
+        }
+
+        window.closeSolutionModal = function() {
+            document.getElementById('solutionModal').classList.add('hidden');
+            document.getElementById('modalSolutionContent').innerHTML = '';
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `Câu ${currentQuestion + 1} / ${quizData.length}`;
+        }
+        
+        window.nextQuestion = function() {
+            document.getElementById('solutionModal').classList.add('hidden');
+            document.getElementById('modalSolutionContent').innerHTML = '';
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            document.getElementById('quizContainer').innerHTML = '';
+            document.getElementById('solutionContainer').innerHTML = '';
+            document.getElementById('solutionModal').classList.add('hidden');
+            document.getElementById('modalSolutionContent').innerHTML = '';
+
+            const quizResult = document.getElementById('quizResult');
+            const resultText = `Bạn đã hoàn thành! Kết quả: ${score} / ${quizData.length} câu đúng.`;
+            const resultColor = score / quizData.length >= 0.8 ? 'var(--success-color)' : (score / quizData.length >= 0.5 ? '#f59e0b' : 'var(--error-color)');
+            
+            quizResult.innerHTML = `<span style="color: ${resultColor}">${resultText}</span>`;
+            
+            document.getElementById('nextQuestionBtn').style.display = 'none';
+            document.getElementById('viewSolutionBtn').style.display = 'none';
+            document.getElementById('submitAnswerBtn').style.display = 'none';
+            document.getElementById('resetQuizBtn').style.display = 'inline-block';
+            document.getElementById('progressBar').style.width = '100%';
+        }
+
+        window.resetQuiz = function() {
+            document.getElementById('solutionModal').classList.add('hidden');
+            document.getElementById('modalSolutionContent').innerHTML = '';
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+            document.getElementById('resetQuizBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
