@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Quản Lý Video Giải Đề</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Lexend (thay thế Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Cấu hình Tailwind để sử dụng font Lexend
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lexend', 'sans-serif'],
+                    },
+                },
+            },
+            darkMode: 'class', // Kích hoạt chế độ dark mode bằng class
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .view {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .topic-card {
+            background-color: white;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .topic-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+        .topic-card .icon-bg {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .topic-card .title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+        .detail-item {
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+        .slot-card:hover, .topic-card:hover, .detail-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        /* Điều chỉnh dropdown trong chế độ tối (không cần nữa, nhưng giữ để consistency) */
+        .status-select {
+            padding: 0.25rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .dark .status-select {
+            background-color: #4b5563;
+            color: #f9fafb;
+            border-color: #6b7280;
+        }
+        .status-select:hover {
+            background-color: #e5e7eb;
+        }
+        .dark .status-select:hover {
+            background-color: #6b7280;
+        }
+        .status-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .dark .status-select:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- Nút chuyển đổi Sáng/Tối -->
+    <div class="fixed top-4 left-4 z-50">
+        <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+    </div>
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <div id="slot-selection" class="view">
+            <header class="text-center mb-10">
+                <h1 class="text-3xl sm:text-4xl font-bold text-indigo-600 dark:text-indigo-400">Trình Quản Lý Video Giải Đề</h1>
+                <p class="text-md text-gray-600 dark:text-gray-400">Quản lý và xem video giải đề thi toán học</p>
+            </header>
+            <div id="slot-container" class="space-y-6"></div>
+        </div>
+        <div id="subtopic-view" class="view hidden">
+            <button class="back-button mb-6 inline-flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Quay lại trang chính
+            </button>
+            <h2 id="subtopic-title" class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8"></h2>
+            <div id="subtopic-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </div>
+        <div id="detail-view" class="view hidden">
+            <button class="back-button mb-6 inline-flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Quay lại danh sách chủ đề
+            </button>
+            <h2 id="detail-title" class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6"></h2>
+            <div id="detail-container" class="space-y-3"></div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- LOGIC CHUYỂN ĐỔI SÁNG/TỐI ---
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        // Hàm áp dụng theme
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            }
+        };
+
+        // Kiểm tra theme đã lưu hoặc theme hệ thống khi tải trang
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+
+        // Sự kiện click nút chuyển đổi
+        themeToggleButton.addEventListener('click', () => {
+            const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // --- LOGIC ỨNG DỤNG ---
+        const slotSelectionView = document.getElementById('slot-selection');
+        const subtopicView = document.getElementById('subtopic-view');
+        const detailView = document.getElementById('detail-view');
+        const slotContainer = document.getElementById('slot-container');
+        const subtopicTitle = document.getElementById('subtopic-title');
+        const subtopicContainer = document.getElementById('subtopic-container');
+        const detailTitle = document.getElementById('detail-title');
+        const detailContainer = document.getElementById('detail-container');
+
+        function showLoading(container) {
+            container.innerHTML = `
+                <div class="flex justify-center items-center p-10">
+                    <div class="w-8 h-8 border-4 border-t-indigo-500 dark:border-t-indigo-400 border-gray-200 dark:border-gray-600 rounded-full animate-spin"></div>
+                </div>
+            `;
+        }
+
+        function showView(viewToShow) {
+            [slotSelectionView, subtopicView, detailView].forEach(v => v.classList.add('hidden'));
+            viewToShow.classList.remove('hidden');
+        }
+
+        async function fetchSlots() {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return [
+                {
+                    id: 6,
+                    title: "Đề 6: Giải Đề Thi",
+                    description: "Video giải đề thi toán học."
+                }
+            ];
+        }
+
+        async function fetchSubtopics(slotId) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return [];
+        }
+
+        async function fetchDetails(subtopicId) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return [];
+        }
+
+        async function renderSlots() {
+            showLoading(slotContainer);
+            const slots = await fetchSlots();
+            slotContainer.innerHTML = '';
+            slots.forEach(slot => {
+                const slotEl = document.createElement('div');
+                slotEl.className = 'bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 ease-in-out cursor-pointer border border-transparent hover:border-indigo-500 dark:hover:border-indigo-400';
+                slotEl.dataset.slotId = slot.id;
+                slotEl.dataset.slotTitle = slot.title;
+                slotEl.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 p-3 rounded-lg mr-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">${slot.title}</h2>
+                            <p class="text-gray-500 dark:text-gray-400 mt-1 font-light">${slot.description}</p>
+                        </div>
+                        <div class="ml-auto text-gray-400 dark:text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+                `;
+                slotEl.addEventListener('click', handleSlotClick);
+                slotContainer.appendChild(slotEl);
+            });
+        }
+
+        async function renderSubtopics(slotId, title) {
+            subtopicTitle.textContent = title;
+            showLoading(subtopicContainer);
+            const subtopics = await fetchSubtopics(slotId);
+            subtopicContainer.innerHTML = '';
+            subtopics.forEach(subtopic => {
+                const subtopicEl = document.createElement('div');
+                subtopicEl.className = 'relative text-center p-5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 ease-in-out cursor-pointer bg-white dark:bg-gray-800';
+                subtopicEl.dataset.targetId = subtopic.id;
+                subtopicEl.dataset.targetTitle = subtopic.title;
+                subtopicEl.innerHTML = `
+                    <div class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">${subtopic.icon}</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 dark:text-gray-200">${subtopic.title}</h3>
+                `;
+                subtopicEl.addEventListener('click', handleSubtopicClick);
+                subtopicContainer.appendChild(subtopicEl);
+            });
+        }
+
+        async function renderDetails(subtopicId, title) {
+            detailTitle.textContent = title;
+            showLoading(detailContainer);
+            const details = await fetchDetails(subtopicId);
+            detailContainer.innerHTML = '';
+            if (details.length > 0) {
+                details.forEach(detail => {
+                    const detailEl = document.createElement('div');
+                    detailEl.className = 'group flex items-center p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out hover:scale-[1.02] bg-white dark:bg-gray-800';
+                    detailEl.innerHTML = `
+                        <span class="text-2xl mr-4">${detail.icon}</span>
+                        <a href="${detail.link}" target="_blank" rel="noopener noreferrer" class="flex-grow font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${detail.text}</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 transition-transform duration-300 group-hover:translate-x-1"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    `;
+                    // Thêm sự kiện click cho link bên trong
+                    detailEl.querySelector('a').addEventListener('click', function(e) {
+                        e.stopPropagation(); // Ngăn chặn sự kiện lan ra ngoài khi click link
+                    });
+                    detailContainer.appendChild(detailEl);
+                });
+            } else {
+                detailContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center p-4">Chưa có nội dung chi tiết cho mục này.</p>';
+            }
+        }
+
+        function handleSlotClick(event) {
+            window.location.href = "https://leotheboy14.github.io/LearnMath/ExamSolve%20Pro.html";
+        }
+
+        function handleSubtopicClick(event) {
+            const card = event.currentTarget;
+            const targetId = card.dataset.targetId;
+            const targetTitle = card.dataset.targetTitle;
+            renderDetails(targetId, targetTitle);
+            showView(detailView);
+        }
+
+        document.querySelectorAll('.back-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const parentView = button.closest('.view');
+                if (parentView.id === 'detail-view') showView(subtopicView);
+                else if (parentView.id === 'subtopic-view') showView(slotSelectionView);
+            });
+        });
+
+        renderSlots();
+        showView(slotSelectionView);
+    });
+    </script>
+</body>
+</html>
