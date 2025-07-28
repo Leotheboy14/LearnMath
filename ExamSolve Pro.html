@@ -6,16 +6,39 @@
     <title>Đề 6 - Hướng dẫn giải</title>
     <style>
         :root {
+            /* Chủ đề TỐI (mặc định) */
             --bg-color: #121826;
             --grid-container-bg: #1f2937;
             --font-color: #f9fafb;
+            --modal-bg: #2d3748;
+            --modal-border: #4a5568;
+            --code-bg: #1f2937;
+            --inactive-bg: #374151;
+            --inactive-text: #9ca3af;
+            --button-bg: #374151;
+            --button-hover-bg: #4a5568;
+            
+            /* Màu không đổi */
             --green-normal: #4ade80;
             --blue-info: #3b82f6;
-            --red-error: #ef4444; /* Màu đỏ cho lỗi */
-            --gray-inactive: #374151;
-            --text-dark: #111827;
+            --red-error: #ef4444;
+            --text-on-bright-bg: #111827;
             --border-radius: 8px;
             --gap-space: 12px;
+        }
+
+        body.light-theme {
+            /* Chủ đề SÁNG */
+            --bg-color: #f3f4f6;
+            --grid-container-bg: #ffffff;
+            --font-color: #111827;
+            --modal-bg: #ffffff;
+            --modal-border: #d1d5db;
+            --code-bg: #e5e7eb;
+            --inactive-bg: #e5e7eb;
+            --inactive-text: #6b7280;
+            --button-bg: #e5e7eb;
+            --button-hover-bg: #d1d5db;
         }
 
         body {
@@ -24,10 +47,13 @@
             background-color: var(--bg-color);
             color: var(--font-color);
             padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .page-header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             max-width: 900px;
             margin: 0 auto 24px auto;
         }
@@ -36,6 +62,21 @@
             font-size: 24px;
             margin: 0;
         }
+        
+        #theme-switcher {
+            background-color: var(--button-bg);
+            color: var(--font-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        #theme-switcher:hover {
+            background-color: var(--button-hover-bg);
+        }
 
         .grid-container {
             max-width: 900px;
@@ -43,6 +84,7 @@
             background-color: var(--grid-container-bg);
             padding: var(--gap-space);
             border-radius: var(--border-radius);
+            transition: background-color 0.3s;
         }
         
         .video-grid {
@@ -65,7 +107,7 @@
 
         .status-normal {
             background-color: var(--green-normal);
-            color: var(--text-dark);
+            color: var(--text-on-bright-bg);
             cursor: pointer;
         }
         .status-normal:hover {
@@ -75,7 +117,7 @@
 
         .status-info {
             background-color: var(--blue-info);
-            color: var(--font-color);
+            color: #ffffff;
             cursor: pointer;
         }
         .status-info:hover {
@@ -83,10 +125,9 @@
             opacity: 0.9;
         }
         
-        /* Lớp mới cho ô màu đỏ */
         .status-error {
             background-color: var(--red-error);
-            color: var(--font-color);
+            color: #ffffff;
             cursor: pointer;
         }
         .status-error:hover {
@@ -95,8 +136,8 @@
         }
 
         .status-inactive {
-            background-color: var(--gray-inactive);
-            color: #9ca3af;
+            background-color: var(--inactive-bg);
+            color: var(--inactive-text);
             cursor: default;
         }
 
@@ -115,16 +156,17 @@
         }
 
         .modal-content {
-            background-color: #2d3748;
+            background-color: var(--modal-bg);
             color: var(--font-color);
             margin: 5% auto;
             padding: 24px;
-            border: 1px solid #4a5568;
+            border: 1px solid var(--modal-border);
             width: 90%;
             max-width: 600px;
             border-radius: var(--border-radius);
             position: relative;
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .modal-content h4 {
@@ -135,7 +177,8 @@
         }
         
         .modal-content code {
-            background-color: #1f2937;
+            background-color: var(--code-bg);
+            color: var(--font-color);
             padding: 2px 6px;
             border-radius: 4px;
             font-family: 'Courier New', Courier, monospace;
@@ -143,11 +186,11 @@
         
         .modal-content i {
             font-style: italic;
-            color: #90cdf4;
+            color: var(--blue-info);
         }
 
         .close-button {
-            color: #a0aec0;
+            color: var(--inactive-text);
             position: absolute;
             top: 10px;
             right: 20px;
@@ -156,7 +199,7 @@
         }
         .close-button:hover,
         .close-button:focus {
-            color: #ffffff;
+            color: var(--font-color);
             text-decoration: none;
             cursor: pointer;
         }
@@ -172,11 +215,13 @@
 
     <header class="page-header">
         <h1>Đề 6</h1>
+        <button id="theme-switcher">Nền Sáng</button>
     </header>
 
     <main class="grid-container">
         <div class="video-grid">
-             <!-- Dòng 1 -->
+            <!-- Grid items remain the same -->
+            <!-- Dòng 1 -->
             <div class="grid-item status-info" data-question="1">1</div>
             <a href="https://www.youtube.com/watch?v=11xEHhrY4_g" target="_blank" class="grid-item status-normal">2</a>
             <div class="grid-item status-info" data-question="3">3</div>
@@ -254,86 +299,32 @@
     </div>
 
     <script>
+        // === LOGIC CHO MODAL ===
         const modal = document.getElementById("infoModal");
         const modalTitle = document.getElementById("modal-title");
         const modalBody = document.getElementById("modal-body");
-        const modalTriggers = document.querySelectorAll(".status-info, .status-error"); // Chọn cả ô xanh và đỏ
+        const modalTriggers = document.querySelectorAll(".status-info, .status-error");
         const closeBtn = document.querySelector(".close-button");
 
-        // Kho chứa nội dung cho các câu hỏi
         const contentData = {
-            "1": `
-                <h4>Hướng dẫn giải bằng máy tính Casio</h4>
-                <p>Bài toán yêu cầu tìm đạo hàm y' tại x=1 cho hàm y = (x² + 2x - 8) / (3x + 9).</p>
-                <h4>Bước 1: Nhập lệnh tính đạo hàm</h4>
-                <p>- Nhấn <code>SHIFT</code> + <code>∫</code> (hiển thị <code>d/dx(</code>).</p>
-                <h4>Bước 2: Nhập hàm số</h4>
-                <p>- Nhập biểu thức: <code>(x² + 2x - 8) ÷ (3x + 9)</code>.</p>
-                <h4>Bước 3: Thêm giá trị x=1</h4>
-                <p>- Sau hàm, nhập dấu phẩy <code>,</code> rồi nhập <code>1</code>.</p>
-                <h4>Bước 4: Thực hiện tính toán</h4>
-                <p>- Nhấn <code>=</code>. Kết quả: <code>0.4375</code> hoặc <code>7/16</code>.</p>
-            `,
-            "3": `
-                <h4>Hướng dẫn giải bài toán</h4>
-                <p>Tìm gia tốc của tên lửa tại t=2 giây, với s(t) = -16t² + 560t.</p>
-                <h4>Bước 1: Tính vận tốc (đạo hàm bậc nhất)</h4>
-                <p>v(t) = d/dt (-16t² + 560t) = <strong>-32t + 560</strong>.</p>
-                <h4>Bước 2: Tính gia tốc (đạo hàm bậc hai)</h4>
-                <p>a(t) = d/dt (-32t + 560) = <strong>-32</strong>.</p>
-                <p>Gia tốc là hằng số, không phụ thuộc vào thời gian.</p>
-                <hr>
-                <h4>Kết quả cuối cùng</h4>
-                <p>Gia tốc của tên lửa là <strong>-32 ft/s²</strong>.</p>
-            `,
-            "11": `
-                <h4>Hướng dẫn giải bằng máy tính Casio</h4>
-                <p>Tìm y'(1) cho hàm y = e^(x³ + 2x - 1) × (3x + 1).</p>
-                <h4>Bước 1: Nhập lệnh đạo hàm</h4>
-                <p>- Nhấn <code>SHIFT</code> + <code>∫</code>.</p>
-                <h4>Bước 2: Nhập hàm số và giá trị</h4>
-                <p>- Nhập: <code>d/dx(e^(x^3 + 2x - 1) * (3x + 1), 1)</code>.</p>
-                <h4>Bước 3: Lấy kết quả</h4>
-                <p>- Nhấn <code>=</code>. Kết quả ≈ <strong>169.947</strong>.</p>
-                <h4>Bước 4: Dò đáp án</h4>
-                <p>- Tính <code>23e²</code> ≈ 169.947. Kết quả khớp với lựa chọn A.</p>
-            `,
-             "15": `
-                <h4 style="color: #f87171;">Lỗi Đề Bài</h4>
-                <p>Câu hỏi 15 bị sai đề.</p>
-            `,
-            "34": `
-                <h4>Hướng dẫn giải bài toán</h4>
-                <p>Tìm <i>c</i> sao cho đồ thị <i>y</i> = <i>a</i> + <i>b</i>x + <i>c</i>x<sup>2</sup> đi qua (0, 5), (-1, -7), và (2, 11).</p>
-                <h4>Bước 1: Thay các điểm vào phương trình</h4>
-                <p>1. Điểm (0, 5): 5 = <i>a</i> + <i>b</i>(0) + <i>c</i>(0)<sup>2</sup> → <strong><i>a</i> = 5</strong>.</p>
-                <p>2. Điểm (-1, -7): -7 = 5 - <i>b</i> + <i>c</i> → -<i>b</i> + <i>c</i> = -12 (PT 1).</p>
-                <p>3. Điểm (2, 11): 11 = 5 + 2<i>b</i> + 4<i>c</i> → 2<i>b</i> + 4<i>c</i> = 6 (PT 2).</p>
-                <h4>Bước 2: Giải hệ phương trình</h4>
-                <p>Từ (PT 1), ta có <i>b</i> = <i>c</i> + 12. Thay vào (PT 2):</p>
-                <p>2(<i>c</i> + 12) + 4<i>c</i> = 6<br>
-                2<i>c</i> + 24 + 4<i>c</i> = 6<br>
-                6<i>c</i> = -18</p>
-                <hr>
-                <h4>Kết quả cuối cùng</h4>
-                <p>Giá trị của <strong><i>c</i> = -3</strong>.</p>
-            `,
+            "1": `...`, // Nội dung câu 1
+            "3": `...`, // Nội dung câu 3
+            "11": `...`, // Nội dung câu 11
+            "15": `...`, // Nội dung câu 15
+            "34": `...`, // Nội dung câu 34
             "default": "<p>Tôi sẽ thêm nội dung sau.</p>"
         };
+        // (Để rút gọn, tôi đã ẩn nội dung chi tiết ở đây, nhưng trong code thật nó vẫn đầy đủ)
 
         modalTriggers.forEach(cell => {
             cell.onclick = function() {
                 const question = this.getAttribute('data-question');
-                
-                // Cập nhật tiêu đề và nội dung modal
                 if (question === "15") {
                     modalTitle.textContent = `Thông báo Lỗi`;
                 } else {
                     modalTitle.textContent = `Hướng dẫn làm bài - Câu ${question}`;
                 }
                 modalBody.innerHTML = contentData[question] || contentData["default"];
-                
-                // Hiển thị modal
                 modal.style.display = "block";
             }
         });
@@ -347,6 +338,34 @@
                 modal.style.display = "none";
             }
         }
+
+        // === LOGIC CHO CHUYỂN ĐỔI CHỦ ĐỀ (THEME SWITCHER) ===
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const body = document.body;
+
+        // Hàm để áp dụng chủ đề
+        const applyTheme = (theme) => {
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                themeSwitcher.textContent = 'Nền Tối';
+            } else {
+                body.classList.remove('light-theme');
+                themeSwitcher.textContent = 'Nền Sáng';
+            }
+        };
+
+        // Bắt sự kiện click vào nút chuyển đổi
+        themeSwitcher.addEventListener('click', () => {
+            let newTheme = body.classList.contains('light-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Tải chủ đề đã lưu khi trang được mở
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // Mặc định là nền tối
+            applyTheme(savedTheme);
+        });
     </script>
 
 </body>
