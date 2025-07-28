@@ -337,9 +337,10 @@
         modalTriggers.forEach(cell => {
             cell.onclick = function() {
                 const question = this.getAttribute('data-question');
-                if (question === "15") {
+                if (question === ("15"||"47")) {
                     modalTitle.textContent = `Thông báo Lỗi`;
-                } else {
+                }
+                else {
                     modalTitle.textContent = `Hướng dẫn làm bài - Câu ${question}`;
                 }
                 modalBody.innerHTML = contentData[question] || contentData["default"];
