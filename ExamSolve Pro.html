@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề 6 - Hướng dẫn giải</title>
+    <style>
+        :root {
+            --bg-color: #121826;
+            --grid-container-bg: #1f2937;
+            --font-color: #f9fafb;
+            --green-normal: #4ade80;
+            --blue-info: #3b82f6;
+            --red-error: #ef4444; /* Màu đỏ cho lỗi */
+            --gray-inactive: #374151;
+            --text-dark: #111827;
+            --border-radius: 8px;
+            --gap-space: 12px;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 24px auto;
+        }
+
+        .page-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .grid-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--grid-container-bg);
+            padding: var(--gap-space);
+            border-radius: var(--border-radius);
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: var(--gap-space);
+        }
+
+        .grid-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .status-normal {
+            background-color: var(--green-normal);
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+        .status-normal:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .status-info {
+            background-color: var(--blue-info);
+            color: var(--font-color);
+            cursor: pointer;
+        }
+        .status-info:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        /* Lớp mới cho ô màu đỏ */
+        .status-error {
+            background-color: var(--red-error);
+            color: var(--font-color);
+            cursor: pointer;
+        }
+        .status-error:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .status-inactive {
+            background-color: var(--gray-inactive);
+            color: #9ca3af;
+            cursor: default;
+        }
+
+        /* Modal (Cửa sổ Pop-up) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #2d3748;
+            color: var(--font-color);
+            margin: 5% auto;
+            padding: 24px;
+            border: 1px solid #4a5568;
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .modal-content h4 {
+            color: var(--green-normal);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .modal-content code {
+            background-color: #1f2937;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .modal-content i {
+            font-style: italic;
+            color: #90cdf4;
+        }
+
+        .close-button {
+            color: #a0aec0;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 640px) {
+            .video-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Đề 6</h1>
+    </header>
+
+    <main class="grid-container">
+        <div class="video-grid">
+             <!-- Dòng 1 -->
+            <div class="grid-item status-info" data-question="1">1</div>
+            <a href="https://www.youtube.com/watch?v=11xEHhrY4_g" target="_blank" class="grid-item status-normal">2</a>
+            <div class="grid-item status-info" data-question="3">3</div>
+            <a href="https://youtu.be/Bsl822CUhDA" target="_blank" class="grid-item status-normal">4</a>
+            <a href="https://youtu.be/WJmA1QAKsBs" target="_blank" class="grid-item status-normal">5</a>
+            <a href="https://youtu.be/Mrdm5NUzbB4" target="_blank" class="grid-item status-normal">6</a>
+            <a href="https://youtu.be/gCNOd_LlHDI" target="_blank" class="grid-item status-normal">7</a>
+
+            <!-- Dòng 2 -->
+            <a href="https://youtu.be/V7Znl5QyvFM" target="_blank" class="grid-item status-normal">8</a>
+            <a href="https://youtu.be/ETKkN1oXkEs" target="_blank" class="grid-item status-normal">9</a>
+            <a href="https://youtu.be/dwdUI1olXEQ" target="_blank" class="grid-item status-normal">10</a>
+            <div class="grid-item status-info" data-question="11">11</div>
+            <a href="https://youtu.be/Bmlz9Y6dZ9U" target="_blank" class="grid-item status-normal">12</a>
+            <a href="https://youtu.be/mkUV1kiTFnw" target="_blank" class="grid-item status-normal">13</a>
+            <a href="https://youtu.be/0nCIXMT7ukU" target="_blank" class="grid-item status-normal">14</a>
+
+            <!-- Dòng 3 -->
+            <div class="grid-item status-error" data-question="15">15</div>
+            <a href="https://youtu.be/rHmbytV_Qas" target="_blank" class="grid-item status-normal">16</a>
+            <a href="https://youtu.be/mKuErH3dPIg" target="_blank" class="grid-item status-normal">17</a>
+            <a href="https://youtu.be/vidMoCrLzsg" target="_blank" class="grid-item status-normal">18</a>
+            <a href="https://youtu.be/_Z4HfHzeNDU" target="_blank" class="grid-item status-normal">19</a>
+            <a href="https://youtu.be/ZXHPl7RvP_E" target="_blank" class="grid-item status-normal">20</a>
+            <a href="https://youtu.be/J6YqOoXfvGM" target="_blank" class="grid-item status-normal">21</a>
+
+            <!-- Dòng 4 -->
+            <a href="https://youtu.be/GYbE02Ku8_A" target="_blank" class="grid-item status-normal">22</a>
+            <a href="https://youtu.be/azXAh9_t2Gs" target="_blank" class="grid-item status-normal">23</a>
+            <a href="https://youtu.be/YFYHUcNOfEI" target="_blank" class="grid-item status-normal">24</a>
+            <a href="https://youtu.be/MqHPPFY4ZL8" target="_blank" class="grid-item status-normal">25</a>
+            <a href="https://youtu.be/kedL7Xqhcaw" target="_blank" class="grid-item status-normal">26</a>
+            <a href="https://youtu.be/srw9vJf667g" target="_blank" class="grid-item status-normal">27</a>
+            <a href="https://youtu.be/zIVgW4EKzlQ" target="_blank" class="grid-item status-normal">28</a>
+
+            <!-- Dòng 5 -->
+            <a href="https://youtu.be/E5SOGTu6lR0" target="_blank" class="grid-item status-normal">29</a>
+            <a href="https://youtu.be/lw0ptLhjMgE" target="_blank" class="grid-item status-normal">30</a>
+            <a href="https://youtu.be/NW9w_ghb7uQ" target="_blank" class="grid-item status-normal">31</a>
+            <a href="https://youtu.be/sZRSE61x1iU" target="_blank" class="grid-item status-normal">32</a>
+            <a href="https://youtu.be/-qPol-lG2MU" target="_blank" class="grid-item status-normal">33</a>
+            <div class="grid-item status-info" data-question="34">34</div>
+            <a href="https://youtu.be/c3Eql9arfFU" target="_blank" class="grid-item status-normal">35</a>
+
+            <!-- Các ô không hoạt động -->
+            <div class="grid-item status-inactive">36</div>
+            <div class="grid-item status-inactive">37</div>
+            <div class="grid-item status-inactive">38</div>
+            <div class="grid-item status-inactive">39</div>
+            <div class="grid-item status-inactive">40</div>
+            <div class="grid-item status-inactive">41</div>
+            <div class="grid-item status-inactive">42</div>
+            <div class="grid-item status-inactive">43</div>
+            <div class="grid-item status-inactive">44</div>
+            <div class="grid-item status-inactive">45</div>
+            <div class="grid-item status-inactive">46</div>
+            <div class="grid-item status-inactive">47</div>
+            <div class="grid-item status-inactive">48</div>
+            <div class="grid-item status-inactive">49</div>
+            <div class="grid-item status-inactive">50</div>
+            <div class="grid-item status-inactive">51</div>
+            <div class="grid-item status-inactive">52</div>
+            <div class="grid-item status-inactive">53</div>
+            <div class="grid-item status-inactive">54</div>
+        </div>
+    </main>
+
+    <!-- Modal HTML -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2 id="modal-title"></h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("infoModal");
+        const modalTitle = document.getElementById("modal-title");
+        const modalBody = document.getElementById("modal-body");
+        const modalTriggers = document.querySelectorAll(".status-info, .status-error"); // Chọn cả ô xanh và đỏ
+        const closeBtn = document.querySelector(".close-button");
+
+        // Kho chứa nội dung cho các câu hỏi
+        const contentData = {
+            "1": `
+                <h4>Hướng dẫn giải bằng máy tính Casio</h4>
+                <p>Bài toán yêu cầu tìm đạo hàm y' tại x=1 cho hàm y = (x² + 2x - 8) / (3x + 9).</p>
+                <h4>Bước 1: Nhập lệnh tính đạo hàm</h4>
+                <p>- Nhấn <code>SHIFT</code> + <code>∫</code> (hiển thị <code>d/dx(</code>).</p>
+                <h4>Bước 2: Nhập hàm số</h4>
+                <p>- Nhập biểu thức: <code>(x² + 2x - 8) ÷ (3x + 9)</code>.</p>
+                <h4>Bước 3: Thêm giá trị x=1</h4>
+                <p>- Sau hàm, nhập dấu phẩy <code>,</code> rồi nhập <code>1</code>.</p>
+                <h4>Bước 4: Thực hiện tính toán</h4>
+                <p>- Nhấn <code>=</code>. Kết quả: <code>0.4375</code> hoặc <code>7/16</code>.</p>
+            `,
+            "3": `
+                <h4>Hướng dẫn giải bài toán</h4>
+                <p>Tìm gia tốc của tên lửa tại t=2 giây, với s(t) = -16t² + 560t.</p>
+                <h4>Bước 1: Tính vận tốc (đạo hàm bậc nhất)</h4>
+                <p>v(t) = d/dt (-16t² + 560t) = <strong>-32t + 560</strong>.</p>
+                <h4>Bước 2: Tính gia tốc (đạo hàm bậc hai)</h4>
+                <p>a(t) = d/dt (-32t + 560) = <strong>-32</strong>.</p>
+                <p>Gia tốc là hằng số, không phụ thuộc vào thời gian.</p>
+                <hr>
+                <h4>Kết quả cuối cùng</h4>
+                <p>Gia tốc của tên lửa là <strong>-32 ft/s²</strong>.</p>
+            `,
+            "11": `
+                <h4>Hướng dẫn giải bằng máy tính Casio</h4>
+                <p>Tìm y'(1) cho hàm y = e^(x³ + 2x - 1) × (3x + 1).</p>
+                <h4>Bước 1: Nhập lệnh đạo hàm</h4>
+                <p>- Nhấn <code>SHIFT</code> + <code>∫</code>.</p>
+                <h4>Bước 2: Nhập hàm số và giá trị</h4>
+                <p>- Nhập: <code>d/dx(e^(x^3 + 2x - 1) * (3x + 1), 1)</code>.</p>
+                <h4>Bước 3: Lấy kết quả</h4>
+                <p>- Nhấn <code>=</code>. Kết quả ≈ <strong>169.947</strong>.</p>
+                <h4>Bước 4: Dò đáp án</h4>
+                <p>- Tính <code>23e²</code> ≈ 169.947. Kết quả khớp với lựa chọn A.</p>
+            `,
+             "15": `
+                <h4 style="color: #f87171;">Lỗi Đề Bài</h4>
+                <p>Câu hỏi 15 bị sai đề.</p>
+            `,
+            "34": `
+                <h4>Hướng dẫn giải bài toán</h4>
+                <p>Tìm <i>c</i> sao cho đồ thị <i>y</i> = <i>a</i> + <i>b</i>x + <i>c</i>x<sup>2</sup> đi qua (0, 5), (-1, -7), và (2, 11).</p>
+                <h4>Bước 1: Thay các điểm vào phương trình</h4>
+                <p>1. Điểm (0, 5): 5 = <i>a</i> + <i>b</i>(0) + <i>c</i>(0)<sup>2</sup> → <strong><i>a</i> = 5</strong>.</p>
+                <p>2. Điểm (-1, -7): -7 = 5 - <i>b</i> + <i>c</i> → -<i>b</i> + <i>c</i> = -12 (PT 1).</p>
+                <p>3. Điểm (2, 11): 11 = 5 + 2<i>b</i> + 4<i>c</i> → 2<i>b</i> + 4<i>c</i> = 6 (PT 2).</p>
+                <h4>Bước 2: Giải hệ phương trình</h4>
+                <p>Từ (PT 1), ta có <i>b</i> = <i>c</i> + 12. Thay vào (PT 2):</p>
+                <p>2(<i>c</i> + 12) + 4<i>c</i> = 6<br>
+                2<i>c</i> + 24 + 4<i>c</i> = 6<br>
+                6<i>c</i> = -18</p>
+                <hr>
+                <h4>Kết quả cuối cùng</h4>
+                <p>Giá trị của <strong><i>c</i> = -3</strong>.</p>
+            `,
+            "default": "<p>Tôi sẽ thêm nội dung sau.</p>"
+        };
+
+        modalTriggers.forEach(cell => {
+            cell.onclick = function() {
+                const question = this.getAttribute('data-question');
+                
+                // Cập nhật tiêu đề và nội dung modal
+                if (question === "15") {
+                    modalTitle.textContent = `Thông báo Lỗi`;
+                } else {
+                    modalTitle.textContent = `Hướng dẫn làm bài - Câu ${question}`;
+                }
+                modalBody.innerHTML = contentData[question] || contentData["default"];
+                
+                // Hiển thị modal
+                modal.style.display = "block";
+            }
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
